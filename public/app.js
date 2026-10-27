@@ -35,15 +35,15 @@ const works = [
     summary: "Hands-on strategy, product communication, consumer psychology, conversion UX, and viral growth experiments for an offline socialization startup.",
     body: "Led cross-functional growth, positioning, and user research across 9 comprehensive workstreams. Repositioned Wavy from superficial matching to interest-led authentic social connection, executed high-performing content experiments, and formulated college market penetration blueprints.",
     items: [
-      "Workstream 1: Brand Positioning & Narrative Architecture — Shifted messaging from traditional dating fatigue to passion-based offline connection ('Find your tribe through shared passions').",
-      "Workstream 2: Website UX & Conversion Optimization — Redesigned value proposition hierarchy, testimonial modules, and reduced friction on download call-to-actions.",
-      "Workstream 3: LinkedIn & Industry Thought Leadership — Established executive communication highlighting modern socialization trends and consumer loneliness epidemics.",
-      "Workstream 4: Privacy & Trust Audit — Addressed Gen-Z safety apprehensions through transparent safety protocols, verified profiles, and moderated group activities.",
-      "Workstream 5: Short-Form Content Experiments & Wavy Stories — Ideated and scripted the 'Wavy Stories' video series; documented experiment achieved 10,947 organic views in 72 hours.",
-      "Workstream 6: Retention, Streak Systems & In-App Gamification — Drafted gamification loops around event check-ins, interest badges, and mutual icebreaker prompts.",
-      "Workstream 7: Bengaluru City-Specific Growth Plan — Mapped student clusters, co-working spaces, cafe hubs, and young professional corridors for targeted localized activations.",
-      "Workstream 8: Proposed 2-Month Campus Ambassador Programme — Built complete planning model: 2 ambassadors/campus, 5–7 micro-events/month, benchmarked target of 150+ downloads/ambassador/month.",
-      "Workstream 9: Cross-Functional Alignment — Maintained continuous feedback loops connecting developer sprint requirements, founder strategy, and real community feedback."
+      "Brand Positioning & Narrative Architecture — Shifted messaging from traditional dating fatigue to passion-based offline connection ('Find your tribe through shared passions').",
+      "Website UX & Conversion Optimization — Redesigned value proposition hierarchy, testimonial modules, and reduced friction on download call-to-actions.",
+      "Industry Thought Leadership — Established executive communication highlighting modern socialization trends and consumer loneliness epidemics.",
+      "Privacy & Trust Audit — Addressed Gen-Z safety apprehensions through transparent safety protocols, verified profiles, and moderated group activities.",
+      "Short-Form Content Experiments & Wavy Stories — Ideated and scripted the 'Wavy Stories' video series; documented experiment achieved 10,947 organic views in 72 hours.",
+      "Retention, Streak Systems & In-App Gamification — Drafted gamification loops around event check-ins, interest badges, and mutual icebreaker prompts.",
+      "Bengaluru City-Specific Growth Plan — Mapped student clusters, co-working spaces, cafe hubs, and young professional corridors for targeted localized activations.",
+      "Campus Ambassador Programme — Built complete planning model: 2 ambassadors/campus, 5–7 micro-events/month, benchmarked target of 150+ downloads/ambassador/month.",
+      "Cross-Functional Alignment — Maintained continuous feedback loops connecting developer sprint requirements, founder strategy, and real community feedback."
     ],
     tags: ["Product Strategy", "Consumer Psychology", "Growth Experiments", "Brand Positioning"],
     link: "https://wavymatch.com/",
@@ -766,6 +766,7 @@ const filterDefs = [
 // App State
 let activePage = "about";
 let activeFilter = "All";
+let selectedWorkId = "01";
 let currentArticleIndex = 0;
 let activeEngineeringIndex = 0;
 
@@ -778,12 +779,17 @@ const viewSections = {
   articles: document.getElementById("view-articles"),
   engineering: document.getElementById("view-engineering")
 };
-const workGrid = document.getElementById("work-grid");
 const workFilters = document.getElementById("work-filters");
+const workIndexList = document.getElementById("work-index-list");
+const workIndexCount = document.getElementById("work-index-count");
+const stageCard = document.getElementById("stage-card");
+const workModalBackdrop = document.getElementById("work-modal-backdrop");
 const workModal = document.getElementById("work-modal");
-const wmMedia = document.getElementById("wm-media");
-const wmInfoContent = document.getElementById("wm-info-content");
+const wmModalCat = document.getElementById("wm-modal-cat");
+const wmModalId = document.getElementById("wm-modal-id");
 const wmClose = document.getElementById("wm-close");
+const wmNarrative = document.getElementById("wm-narrative");
+const wmArtefactPane = document.getElementById("wm-artefact-pane");
 const articleReader = document.getElementById("article-reader");
 const articleCounter = document.getElementById("article-counter");
 const prevArticleBtn = document.getElementById("prev-article");
@@ -796,17 +802,26 @@ const engineeringFrame = document.getElementById("engineering-frame");
 // =========================================================
 function updateNavIndicator() {
   const activeItem = document.querySelector(`.nav-brand-item[data-page="${activePage}"]`);
-  if (!activeItem || !navActiveContainer) return;
+  const navContent = document.querySelector(".nav-content");
+  const navWrapper = document.querySelector(".nav-wrapper");
+  if (!activeItem || !navActiveContainer || !navContent) return;
 
-  const itemRect = activeItem.getBoundingClientRect();
-  const scroller = activeItem.closest(".nav-scroller");
-  if (!scroller) return;
-  const scrollerRect = scroller.getBoundingClientRect();
-  const left = itemRect.left - scrollerRect.left;
-  const width = itemRect.width;
+  // Position the highlight pill over the active item relative to .nav-content
+  const itemLeft = activeItem.offsetLeft;
+  const itemWidth = activeItem.offsetWidth;
 
-  navActiveContainer.style.transform = `translate(${left}px, -50%)`;
-  navActiveContainer.style.width = `${width}px`;
+  navActiveContainer.style.transform = `translate(${itemLeft}px, -50%)`;
+  navActiveContainer.style.width = `${itemWidth}px`;
+
+  // Align active item horizontally with the central marker of .nav-wrapper
+  if (navWrapper) {
+    const wrapperWidth = navWrapper.offsetWidth;
+    const itemCenterInContent = itemLeft + itemWidth / 2;
+    const contentCenter = navContent.offsetWidth / 2;
+    // Offset required so that active item center aligns with nav-wrapper center
+    const targetOffset = (wrapperWidth / 2) - itemCenterInContent - (navContent.offsetLeft || 0);
+    navContent.style.transform = `translateX(${targetOffset}px)`;
+  }
 
   navBrandItems.forEach(item => {
     const isCurrent = item.dataset.page === activePage;
@@ -935,7 +950,7 @@ function handleSectionTransition(direction) {
 // Wheel listener (passive: false to prevent default on homepage)
 window.addEventListener("wheel", (e) => {
   // If modal is open, do not intercept
-  if (workModal && workModal.classList.contains("is-open")) return;
+  if (workModalBackdrop && workModalBackdrop.classList.contains("is-open")) return;
 
   const now = performance.now();
   if (isNavigating || now - lastNavTime < 650) {
@@ -979,7 +994,7 @@ window.addEventListener("wheel", (e) => {
 
 // Touch swipe gestures
 window.addEventListener("touchstart", (e) => {
-  if (workModal && workModal.classList.contains("is-open")) return;
+  if (workModalBackdrop && workModalBackdrop.classList.contains("is-open")) return;
   if (e.touches && e.touches.length === 1) {
     touchStartY = e.touches[0].clientY;
     touchStartX = e.touches[0].clientX;
@@ -987,7 +1002,7 @@ window.addEventListener("touchstart", (e) => {
 }, { passive: true });
 
 window.addEventListener("touchend", (e) => {
-  if (touchStartY === null || (workModal && workModal.classList.contains("is-open"))) return;
+  if (touchStartY === null || (workModalBackdrop && workModalBackdrop.classList.contains("is-open"))) return;
   const now = performance.now();
   if (isNavigating || now - lastNavTime < 650) {
     touchStartY = null;
@@ -1028,7 +1043,7 @@ window.addEventListener("touchend", (e) => {
 
 // Keyboard navigation
 window.addEventListener("keydown", (e) => {
-  if (workModal && workModal.classList.contains("is-open")) return;
+  if (workModalBackdrop && workModalBackdrop.classList.contains("is-open")) return;
   const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
   if (activeTag === "input" || activeTag === "textarea" || activeTag === "select") return;
 
@@ -1047,7 +1062,342 @@ window.addEventListener("keydown", (e) => {
 });
 
 // =========================================================
-// WORK GALLERY & FILTER SYSTEM
+// BESPOKE VISUAL ARTEFACT GENERATORS
+// Tailored editorial graphics communicating the exact thinking per project
+// =========================================================
+function renderArtefact(w, isModal = false) {
+  const prefix = isModal ? "m-" : "s-";
+  
+  // 1. PSA (01) — 6-Track Life Skills Curriculum & Expansion Architecture
+  if (w.id === "01") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Strategic Architecture · 6 Tracks</span>
+          <span class="afl-type">Curriculum Expansion</span>
+        </div>
+        <div class="psa-track-grid">
+          <div class="psa-track-cell">
+            <span class="psa-track-num">01 / ORATORY</span>
+            <span class="psa-track-title">Public Speaking & Debate</span>
+            <span class="psa-track-metric">Institutional Cohorts</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">02 / CAPITAL</span>
+            <span class="psa-track-title">Financial Literacy</span>
+            <span class="psa-track-metric">Budgeting & Value</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">03 / WELLNESS</span>
+            <span class="psa-track-title">Mental Health Literacy</span>
+            <span class="psa-track-metric">Counseling Frameworks</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">04 / CIVICS</span>
+            <span class="psa-track-title">Consent & Boundary Education</span>
+            <span class="psa-track-metric">Peer Dialogue</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">05 / LEADERSHIP</span>
+            <span class="psa-track-title">Executive Presence</span>
+            <span class="psa-track-metric">Student Councils</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">06 / GROWTH</span>
+            <span class="psa-track-title">National Chapters</span>
+            <span class="psa-track-metric">Multi-City Launch</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 2. Wavy (02) — Viral Social Experiment Rhythm & Conversion
+  if (w.id === "02") {
+    return `
+      <div class="artefact-canvas wavy-growth-artefact">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Documented Experiment · 72-Hour Horizon</span>
+          <span class="afl-type">10,947 Views</span>
+        </div>
+        <div class="wavy-headline-stat">
+          <div>
+            <div class="wavy-stat-val">10,947</div>
+            <div class="wavy-stat-lbl">Organic Views · Wavy Stories Series</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 15px; font-weight: 600; color: var(--accent-orange);">0 Paid Ad Spend</div>
+            <div style="font-size: 11px; color: #777;">Passion-Led Framing</div>
+          </div>
+        </div>
+        <div class="wavy-timeline-bars">
+          <div class="wavy-day-bar" style="height: 35px;">
+            <span class="wavy-day-lbl">Day 1<br>1.8K</span>
+          </div>
+          <div class="wavy-day-bar" style="height: 50px;">
+            <span class="wavy-day-lbl">Day 2<br>3.9K</span>
+          </div>
+          <div class="wavy-day-bar highlight" style="height: 60px;">
+            <span class="wavy-day-lbl">Day 3<br>5.2K</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 3. Digital Product Opportunity Research (03) — Demand vs Effort Matrix
+  if (w.id === "03") {
+    return `
+      <div class="artefact-canvas matrix-container">
+        <div class="artefact-frame-label">
+          <span class="afl-title">50+ Products · 100+ Pain Points</span>
+          <span class="afl-type">Opportunity Matrix</span>
+        </div>
+        <div class="matrix-canvas">
+          <div class="matrix-axis-x"></div>
+          <div class="matrix-axis-y"></div>
+          <span class="matrix-quadrant-label" style="top: 0; left: 0;">Niche / Low WTP</span>
+          <span class="matrix-quadrant-label top-right">Underserved Sweet Spot</span>
+          <span class="matrix-quadrant-label" style="bottom: 0; left: 0;">Commoditized</span>
+          <span class="matrix-quadrant-label" style="bottom: 0; right: 0;">Heavy Moat</span>
+          
+          <!-- Sample Data Points benchmarked -->
+          <div class="matrix-dot highlight" style="top: 22%; right: 26%;" title="Identified High-Signal Gaps">★</div>
+          <div class="matrix-dot secondary" style="top: 35%; left: 30%;"></div>
+          <div class="matrix-dot secondary" style="top: 60%; right: 40%;"></div>
+          <div class="matrix-dot secondary" style="bottom: 25%; left: 20%;"></div>
+          <div class="matrix-dot secondary" style="bottom: 30%; right: 18%;"></div>
+          <div class="matrix-dot secondary" style="top: 45%; right: 15%;"></div>
+        </div>
+        <div class="matrix-caption-bar">
+          <span>← Lower Customer Pain Severity</span>
+          <span>Higher Willingness to Pay ($9–$49/mo) →</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // 4. Heartfelt AI (04) — Two-Stage Prompt Chaining Pipeline
+  if (w.id === "04") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Voice Synthesis Pipeline</span>
+          <span class="afl-type">Anti-Slop Chaining</span>
+        </div>
+        <div class="pipeline-flow">
+          <div class="pipeline-node">
+            <span class="pipeline-node-step">Stage 01</span>
+            <span class="pipeline-node-name">Raw Input</span>
+            <span style="font-size: 9px; color: #888;">Personal Cadence</span>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-node">
+            <span class="pipeline-node-step">Stage 02</span>
+            <span class="pipeline-node-name">Semantic Extract</span>
+            <span style="font-size: 9px; color: #888;">Idiosyncrasies</span>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-node accent">
+            <span class="pipeline-node-step">Stage 03</span>
+            <span class="pipeline-node-name">Cadence Synth</span>
+            <span style="font-size: 9px; color: var(--accent-violet);">Vulnerability Guard</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 5. LinkedIn Distribution Engine (06) — Organic Acquisition Funnel
+  if (w.id === "06") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Distribution Engine Mechanics</span>
+          <span class="afl-type">0 to 12.1K Followers</span>
+        </div>
+        <div class="funnel-blocks">
+          <div class="funnel-tier tier-lead">
+            <span class="funnel-name">Total Organic Post Impressions</span>
+            <span class="funnel-val">584,000+</span>
+          </div>
+          <div class="funnel-tier">
+            <span class="funnel-name">Non-Follower Algorithmic Reach</span>
+            <span class="funnel-val">64%</span>
+          </div>
+          <div class="funnel-tier">
+            <span class="funnel-name">Total Published Analytical Essays</span>
+            <span class="funnel-val">111 Posts</span>
+          </div>
+          <div class="funnel-tier" style="background: var(--accent-orange-soft); border-color: var(--accent-orange-border);">
+            <span class="funnel-name" style="color: var(--accent-orange); font-weight: 500;">Converted Job & Advisory Inbounds</span>
+            <span class="funnel-val" style="color: var(--accent-orange);">3 Offers in 15d</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 6. Especa (07) — Founder's Office Operations Matrix
+  if (w.id === "07") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Founder's Office Operating Cadence</span>
+          <span class="afl-type">Cross-Functional</span>
+        </div>
+        <div class="roadmap-timeline">
+          <div class="roadmap-phase">
+            <span class="phase-tag">Editorial</span>
+            <span class="phase-name">Publishing Rhythms</span>
+            <span class="phase-desc">Weekly multichannel social and narrative alignment</span>
+          </div>
+          <div class="roadmap-phase">
+            <span class="phase-tag">Support</span>
+            <span class="phase-name">Feedback Loop</span>
+            <span class="phase-desc">Direct customer ticket triage to product sprint backlogs</span>
+          </div>
+          <div class="roadmap-phase">
+            <span class="phase-tag">Strategy</span>
+            <span class="phase-name">Decision Decks</span>
+            <span class="phase-desc">Founder briefing decks and allocation frameworks</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 7. ARS Group (08 & 09) — B2B BD Pipeline & Summit Operations
+  if (w.id === "08" || w.id === "09") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">${w.id === "08" ? "B2B Partnership Pipeline" : "Summit Operations & Stage Cue"}</span>
+          <span class="afl-type">${w.id === "08" ? "Zero Deal Leakage" : "20+ Crew Lead"}</span>
+        </div>
+        <div class="kpi-score-strip">
+          <div class="kpi-score-box">
+            <span class="kpi-score-val">100%</span>
+            <span class="kpi-score-lbl">Pipeline Adherence</span>
+          </div>
+          <div class="kpi-score-box">
+            <span class="kpi-score-val">MoUs</span>
+            <span class="kpi-score-lbl">Legal Compliance</span>
+          </div>
+          <div class="kpi-score-box">
+            <span class="kpi-score-val">Live</span>
+            <span class="kpi-score-lbl">Stage Cue Sync</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 8. TEDxSinhgad (10) — Production & Crisis Management Architecture
+  if (w.id === "10") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Licensed TEDx Operational Grid</span>
+          <span class="afl-type">Official Recommendation</span>
+        </div>
+        <div class="psa-track-grid">
+          <div class="psa-track-cell">
+            <span class="psa-track-num">SPONSORSHIP</span>
+            <span class="psa-track-title">Pitch Collateral</span>
+            <span class="psa-track-metric">Corporate Funding</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">SPEAKERS</span>
+            <span class="psa-track-title">Liaison Logistics</span>
+            <span class="psa-track-metric">Travel & Itinerary</span>
+          </div>
+          <div class="psa-track-cell">
+            <span class="psa-track-num">STAGE</span>
+            <span class="psa-track-title">Crisis Protocols</span>
+            <span class="psa-track-metric">Rapid Bottleneck Fix</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 9. Academic & Leadership Excellence (24) — Rank 1 & SGPA Breakdown
+  if (w.id === "24") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">Academic Record · B.Tech CSE</span>
+          <span class="afl-type">Rank 1 Benchmark</span>
+        </div>
+        <div class="kpi-score-strip">
+          <div class="kpi-score-box" style="border-color: var(--accent-orange-border); background: var(--accent-orange-soft);">
+            <span class="kpi-score-val" style="color: var(--accent-orange);">10.0</span>
+            <span class="kpi-score-lbl">Perfect SGPA (Sem 1)</span>
+          </div>
+          <div class="kpi-score-box">
+            <span class="kpi-score-val">#1</span>
+            <span class="kpi-score-lbl">College Rank</span>
+          </div>
+          <div class="kpi-score-box">
+            <span class="kpi-score-val">#5</span>
+            <span class="kpi-score-lbl">University Rank</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 10. McKinsey & Aspire Fellowships (25, 26) — Problem-Solving Frameworks
+  if (w.id === "25" || w.id === "26") {
+    return `
+      <div class="artefact-canvas">
+        <div class="artefact-frame-label">
+          <span class="afl-title">${w.id === "25" ? "McKinsey Problem Solving Curriculum" : "Harvard Faculty Fellowship"}</span>
+          <span class="afl-type">Global Cohort</span>
+        </div>
+        <div class="roadmap-timeline">
+          <div class="roadmap-phase">
+            <span class="phase-tag">Tree</span>
+            <span class="phase-name">Issue Trees</span>
+            <span class="phase-desc">Hypothesis-driven root cause decomposition</span>
+          </div>
+          <div class="roadmap-phase">
+            <span class="phase-tag">Ethics</span>
+            <span class="phase-name">Values-Based</span>
+            <span class="phase-desc">Systems-level social impact and moral reasoning</span>
+          </div>
+          <div class="roadmap-phase">
+            <span class="phase-tag">Clarity</span>
+            <span class="phase-name">Executive Prep</span>
+            <span class="phase-desc">Top-down pyramid principle communication</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Default Editorial Artefact: Framework & Structured Deliverables Matrix
+  return `
+    <div class="artefact-canvas">
+      <div class="artefact-frame-label">
+        <span class="afl-title">Key Contributions & Deliverables</span>
+        <span class="afl-type">${w.cat}</span>
+      </div>
+      <div class="funnel-blocks">
+        ${w.items.slice(0, 3).map((item, idx) => `
+          <div class="funnel-tier" style="padding: 7px 10px;">
+            <span class="funnel-name" style="font-size: 11.5px; line-height: 1.35;">${item}</span>
+            <span class="funnel-val" style="color: var(--accent-orange); font-size: 10px;">P${idx + 1}</span>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+// =========================================================
+// EDITORIAL PROJECT INDEX & STAGE SYSTEM
 // =========================================================
 function initWorkFilters() {
   if (!workFilters) return;
@@ -1068,141 +1418,256 @@ function initWorkFilters() {
     item.addEventListener("click", () => {
       activeFilter = item.dataset.filter;
       initWorkFilters();
-      renderWorkGrid();
+      renderWorkSection();
     });
   });
 }
 
-function renderWorkGrid() {
-  if (!workGrid) return;
+function renderWorkSection() {
   const filtered = activeFilter === "All" 
     ? works 
     : works.filter(w => w.cat === activeFilter);
 
-  workGrid.innerHTML = filtered.map(w => `
-    <article class="work-grid-card" data-id="${w.id}" style="background-color: ${w.bg};">
-      <div class="card-header">
-        <span class="card-marker" title="${w.cat}">${w.marker}</span>
-        <span class="card-num">${w.id}</span>
-      </div>
-      <div class="card-canvas">
-        <div>
-          <div class="card-org">${w.org}</div>
-          <h3 class="card-title">${w.title}</h3>
-          <p class="card-summary">${w.summary}</p>
-        </div>
-        <div class="card-footer">
-          <div class="card-tags">
-            ${w.tags.slice(0, 3).map(t => `<span class="card-tag">${t}</span>`).join("")}
-          </div>
-          <span class="card-date">${w.date}</span>
-        </div>
-      </div>
-    </article>
-  `).join("");
+  // Update counter
+  if (workIndexCount) {
+    workIndexCount.textContent = `${filtered.length} Entr${filtered.length === 1 ? 'y' : 'ies'}`;
+  }
 
-  workGrid.querySelectorAll(".work-grid-card").forEach(card => {
-    card.addEventListener("click", () => {
-      const w = works.find(item => item.id === card.dataset.id);
-      if (w) openModal(w);
+  // Ensure selectedWorkId exists in current filtered set
+  const exists = filtered.some(w => w.id === selectedWorkId);
+  if (!exists && filtered.length > 0) {
+    selectedWorkId = filtered[0].id;
+  }
+
+  // Render Left Vertical Index
+  if (workIndexList) {
+    workIndexList.innerHTML = filtered.map(w => {
+      const isSelected = w.id === selectedWorkId;
+      return `
+        <div class="work-index-item ${isSelected ? 'work-index-item--selected' : ''}" 
+             data-id="${w.id}" 
+             tabindex="0" 
+             role="option" 
+             aria-selected="${isSelected}">
+          <div class="wii-left">
+            <span class="wii-marker" title="${w.cat}">${w.marker}</span>
+            <span class="wii-num">${w.id}</span>
+          </div>
+          <div class="wii-body">
+            <div class="wii-meta">
+              <span class="wii-org">${w.org.split("·")[0].trim()}</span>
+              <span class="wii-cat-pill">${w.cat}</span>
+            </div>
+            <h3 class="wii-title">${w.title}</h3>
+            <p class="wii-sub">${w.summary}</p>
+          </div>
+          <div class="wii-right">
+            <span class="wii-indicator" aria-hidden="true">${isSelected ? '✕' : '+'}</span>
+            <span class="wii-date">${w.date.split("—")[0].trim()}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Event listeners on index items
+    workIndexList.querySelectorAll(".work-index-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const id = item.dataset.id;
+        if (selectedWorkId === id) {
+          // If already selected, open the deep modal
+          const w = works.find(item => item.id === id);
+          if (w) openModal(w);
+        } else {
+          selectedWorkId = id;
+          renderWorkSection();
+        }
+      });
+
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const id = item.dataset.id;
+          if (selectedWorkId === id) {
+            const w = works.find(item => item.id === id);
+            if (w) openModal(w);
+          } else {
+            selectedWorkId = id;
+            renderWorkSection();
+          }
+        }
+      });
     });
-  });
+  }
+
+  // Render Right Hero Stage
+  renderWorkStage();
+}
+
+function renderWorkStage() {
+  if (!stageCard) return;
+  const current = works.find(w => w.id === selectedWorkId) || works[0];
+  if (!current) return;
+
+  const statusBadge = current.status ? `<span class="stage-status-badge">${current.status}</span>` : '';
+  const artefactHtml = renderArtefact(current, false);
+
+  stageCard.innerHTML = `
+    <div class="stage-accent-bar"></div>
+    <div class="stage-header">
+      <div>
+        <div class="stage-tagline">
+          <span class="stage-category-badge">${current.cat}</span>
+          <span class="stage-timeline">${current.date}</span>
+        </div>
+        <div class="stage-org">${current.org}</div>
+        <h2 class="stage-title">${current.title}</h2>
+        <p class="stage-summary">${current.summary}</p>
+      </div>
+      <div>${statusBadge}</div>
+    </div>
+
+    <!-- Bespoke Visual Storytelling Artefact -->
+    <div class="stage-artefact-slot">
+      ${artefactHtml}
+    </div>
+
+    <div class="stage-footer">
+      <div class="stage-tags">
+        ${current.tags.map(t => `<span class="stage-tag">${t}</span>`).join("")}
+      </div>
+      <button class="stage-open-btn" id="stage-open-detail" type="button">
+        <span>Open Project Case Study</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  `;
+
+  const openBtn = document.getElementById("stage-open-detail");
+  if (openBtn) {
+    openBtn.addEventListener("click", () => openModal(current));
+  }
+}
+
+// Backward compatible alias
+function renderWorkGrid() {
+  renderWorkSection();
 }
 
 // =========================================================
-// WORK MODAL (2-Column Showcase)
+// NOTION-INSPIRED EDITORIAL POPUP MODAL
 // =========================================================
 function openModal(w) {
-  if (!workModal) return;
+  if (!workModal || !workModalBackdrop) return;
 
-  const statusHtml = w.status ? `<div class="wm-status-pill">${w.status}</div>` : '';
+  selectedWorkId = w.id;
+  renderWorkSection(); // Keep index in sync
 
-  // Populate Left Media Pane
-  wmMedia.innerHTML = `
-    <div class="wm-showcase">
-      ${statusHtml}
-      <span class="wm-showcase-badge">${w.cat} · ${w.date}</span>
-      <h2 class="wm-showcase-title">${w.title}</h2>
-      <p style="color: #666; font-size: 15px; line-height: 1.55; margin-bottom: 24px;">${w.summary}</p>
-      
-      <div class="wm-showcase-statgrid">
-        <div class="wm-stat-item">
-          <b>${w.org.split("·")[0].trim()}</b>
-          <span>Organization</span>
-        </div>
-        <div class="wm-stat-item">
-          <b>${w.date}</b>
-          <span>Timeline</span>
-        </div>
-      </div>
+  if (wmModalCat) wmModalCat.textContent = w.cat;
+  if (wmModalId) wmModalId.textContent = `#${w.id}`;
 
-      <div style="border-top: 1px solid rgba(0,0,0,0.06); padding-top: 20px;">
-        <span class="wm-section-label">KEY DELIVERABLES & FOCUS AREAS</span>
-        <ul style="padding-left: 20px; font-size: 14px; line-height: 1.6; color: #333; margin-top: 8px;">
-          ${w.items.slice(0, 5).map(i => `<li>${i}</li>`).join("")}
-        </ul>
-      </div>
+  const statusPill = w.status ? `<span class="wm-pill wm-pill--orange">${w.status}</span>` : '';
+  const linkHtml = w.link ? `
+    <div style="margin-top: 12px;">
+      <a class="wm-link-cta" href="${w.link}" target="_blank" rel="noopener noreferrer">
+        <span>View live project / verified link</span>
+        <span aria-hidden="true">↗</span>
+      </a>
     </div>
-  `;
+  ` : '';
 
-  // Populate Right Info Pane
-  wmInfoContent.innerHTML = `
-    <div class="wm-info-header">
-      <h2 class="wm-info-title">${w.title}</h2>
-      <div class="wm-info-year">${w.org} · ${w.date}</div>
-      <div class="wm-info-categories">
-        ${w.tags.map(t => `<span class="wm-info-category">${t}</span>`).join("")}
-      </div>
+  const proofHtml = w.proof ? `
+    <div class="wm-section-box">
+      <span class="wm-section-heading">Outcomes & Impact</span>
+      <div class="wm-proof-card">${w.proof}</div>
     </div>
+  ` : '';
 
-    <div style="border-top: 1px solid var(--border-light); padding-top: 20px; display: flex; flex-direction: column; gap: 20px;">
-      <div>
-        <h4 class="wm-section-label">ROLE CONTEXT & ARCHITECTURE</h4>
-        <p class="wm-info-body">${w.body}</p>
+  // Left Narrative Pane
+  if (wmNarrative) {
+    wmNarrative.innerHTML = `
+      <div class="wm-headline-block">
+        <span class="wm-org-line">${w.org}</span>
+        <h2 class="wm-title">${w.title}</h2>
+        <div class="wm-meta-pills">
+          <span class="wm-pill">${w.date}</span>
+          <span class="wm-pill">${w.cat}</span>
+          ${statusPill}
+        </div>
       </div>
 
-      <div>
-        <h4 class="wm-section-label">WHAT I WORKED ON & DELIVERABLES</h4>
-        <ul class="wm-info-list">
-          ${w.items.map(i => `<li>${i}</li>`).join("")}
+      <div class="wm-section-box">
+        <span class="wm-section-heading">Overview</span>
+        <p class="wm-body-text">${w.body}</p>
+      </div>
+
+      <div class="wm-section-box">
+        <span class="wm-section-heading">What I worked on</span>
+        <ul class="wm-deliverables-list">
+          ${w.items.map(item => `<li>${item}</li>`).join("")}
         </ul>
       </div>
 
-      ${w.proof ? `
-        <div>
-          <h4 class="wm-section-label">RECOGNITION, METRICS & PROOF</h4>
-          <div class="wm-proof-box">${w.proof}</div>
-        </div>
-      ` : ""}
+      ${proofHtml}
+      ${linkHtml}
+    `;
+  }
 
-      ${w.link ? `
-        <div>
-          <a class="wm-link" href="${w.link}" target="_blank" rel="noopener noreferrer">
-            View live project / repository ↗
-          </a>
+  // Right Artefact Pane
+  if (wmArtefactPane) {
+    wmArtefactPane.innerHTML = `
+      <div class="wm-artefact-wrapper">
+        <div class="wm-artefact-label">
+          <span>Project Artefact</span>
+          <span>${w.cat}</span>
         </div>
-      ` : ""}
-    </div>
-  `;
+        ${renderArtefact(w, true)}
+      </div>
 
-  workModal.classList.add("is-open");
+      <div class="wm-quick-facts">
+        <div class="wm-fact-row">
+          <span class="wm-fact-label">Organization</span>
+          <span class="wm-fact-val">${w.org.split("·")[0].trim()}</span>
+        </div>
+        <div class="wm-fact-row">
+          <span class="wm-fact-label">Timeline</span>
+          <span class="wm-fact-val">${w.date}</span>
+        </div>
+        <div class="wm-fact-row">
+          <span class="wm-fact-label">Status</span>
+          <span class="wm-fact-val">${w.status || "Completed"}</span>
+        </div>
+        <div class="wm-fact-row" style="border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 8px; margin-top: 2px;">
+          <span class="wm-fact-label">Tags</span>
+          <span class="wm-fact-val" style="font-size: 11px; color: #555;">${w.tags.join(" · ")}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  workModalBackdrop.classList.add("is-open");
+  workModalBackdrop.setAttribute("aria-hidden", "false");
   workModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
-  if (!workModal) return;
-  workModal.classList.remove("is-open");
-  workModal.setAttribute("aria-hidden", "true");
+  if (!workModalBackdrop) return;
+  workModalBackdrop.classList.remove("is-open");
+  workModalBackdrop.setAttribute("aria-hidden", "true");
+  if (workModal) workModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 }
 
 if (wmClose) wmClose.addEventListener("click", closeModal);
-workModal.addEventListener("click", e => {
-  if (e.target === workModal) closeModal();
-});
+if (workModalBackdrop) {
+  workModalBackdrop.addEventListener("click", e => {
+    if (e.target === workModalBackdrop) closeModal();
+  });
+}
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeModal();
+  if (e.key === "Escape" && workModalBackdrop && workModalBackdrop.classList.contains("is-open")) {
+    closeModal();
+  }
 });
 
 // =========================================================
@@ -1449,27 +1914,47 @@ function renderEngineeringFrame() {
   if (!engineeringFrame) return;
   const project = engineeringProjects[activeEngineeringIndex];
 
+  // Projects that have actual live public deployments suitable for embedded view
+  const isEmbeddable = project.url && (project.url.includes("vercel.app") || project.url.includes("netlify.app") || project.url.includes("github.com"));
+
+  const previewEmbedHtml = isEmbeddable ? `
+    <div class="engineering-preview-container">
+      <iframe class="engineering-iframe" 
+              src="${project.url}" 
+              title="${project.title} Preview" 
+              loading="lazy" 
+              sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
+      </iframe>
+    </div>
+  ` : '';
+
   engineeringFrame.innerHTML = `
     <div class="engineering-demo-card">
       <div class="demo-card-browserbar">
         <div class="browser-dots">
-          <div class="browser-dot"></div>
-          <div class="browser-dot"></div>
-          <div class="browser-dot"></div>
+          <div class="browser-dot" style="background: #ff5f56;"></div>
+          <div class="browser-dot" style="background: #ffbd2e;"></div>
+          <div class="browser-dot" style="background: #27c93f;"></div>
         </div>
         <div class="browser-url">${project.url}</div>
+        <a class="demo-action-btn" href="${project.url}" target="_blank" rel="noopener noreferrer" style="padding: 4px 12px; font-size: 12px; border-radius: 4px; margin-left: auto;">
+          Open Live ↗
+        </a>
       </div>
+
+      ${previewEmbedHtml}
+
       <div class="demo-card-content">
         <span class="demo-project-badge">ACTIVE EXPERIMENT</span>
         <h2 class="demo-project-title">${project.title}</h2>
         <p class="demo-project-desc">${project.desc}</p>
-        <p style="font-size: 14.5px; line-height: 1.6; color: #555; margin-bottom: 24px;">${project.highlights}</p>
+        <p style="font-size: 14.5px; line-height: 1.6; color: #444; margin-bottom: 24px;">${project.highlights}</p>
         <div class="demo-tags">
           ${project.tags.map(t => `<span class="demo-tag">${t}</span>`).join("")}
         </div>
         <div>
           <a class="demo-action-btn" href="${project.url}" target="_blank" rel="noopener noreferrer">
-            Open Project ↗
+            Visit Project Repository / Site ↗
           </a>
         </div>
       </div>

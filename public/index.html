@@ -17,9 +17,9 @@
     <div class="nav-wrapper">
       <div class="ruler-lines" aria-hidden="true"></div>
       <div class="nav-viewport" data-ready="true">
-        <div class="active-container" id="nav-active-container" aria-hidden="true"></div>
         <div class="nav-scroller">
           <nav class="nav-content" aria-label="Primary navigation">
+            <div class="active-container" id="nav-active-container" aria-hidden="true"></div>
             <div class="nav-brand-item nav-brand-item--active" data-page="about">
               <a href="/" class="nav-brand nav-brand--active" data-page="about" aria-current="page" data-label="About">
                 <span>About</span>
@@ -124,7 +124,23 @@
           </div>
         </header>
 
-        <div class="work-grid" id="work-grid">
+        <div class="editorial-work-container" id="editorial-work-container">
+          <!-- Left: Art-directed Vertical Index -->
+          <div class="work-index-pane" id="work-index-pane" role="region" aria-label="Project Index">
+            <div class="work-index-meta-strip">
+              <span class="index-meta-count" id="work-index-count">28 Entries</span>
+              <span class="index-meta-hint">Click to inspect · Space/Enter to expand</span>
+            </div>
+            <div class="work-index-list" id="work-index-list" role="listbox" aria-label="Work Index">
+            </div>
+          </div>
+
+          <!-- Right: Hero Editorial Stage -->
+          <div class="work-stage-pane" id="work-stage-pane" role="region" aria-label="Selected Work Stage">
+            <div class="stage-sticky-card" id="stage-card">
+              <!-- Dynamically populated selected experience showcase -->
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -163,12 +179,33 @@
     </section>
   </main>
 
-  <div class="work-modal" id="work-modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="wm-media" id="wm-media">
-    </div>
-    <div class="wm-info" id="wm-info">
-      <button class="wm-close-button" id="wm-close" aria-label="Close modal">×</button>
-      <div class="wm-info-content" id="wm-info-content">
+  <div class="work-modal-backdrop" id="work-modal-backdrop" aria-hidden="true">
+    <div class="work-modal-panel" id="work-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="wm-editorial-topbar">
+        <div class="wm-breadcrumbs">
+          <span class="wm-bc-root">Work</span>
+          <span class="wm-bc-sep">/</span>
+          <span class="wm-bc-cat" id="wm-modal-cat">Category</span>
+          <span class="wm-bc-sep">/</span>
+          <span class="wm-bc-num" id="wm-modal-id">01</span>
+        </div>
+        <div class="wm-topbar-actions">
+          <span class="wm-kbd-hint">Esc to close</span>
+          <button class="wm-close-button" id="wm-close" aria-label="Close modal">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="wm-editorial-content">
+        <div class="wm-left-narrative" id="wm-narrative">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="wm-right-artefact" id="wm-artefact-pane">
+          <!-- Populated dynamically with artefact -->
+        </div>
       </div>
     </div>
   </div>
