@@ -1,19 +1,18 @@
 # Sanskruti Dhamal — Portfolio
 
-[![Deploy to Hatchable](https://hatchable.com/deploy-button.svg)](https://hatchable.com/deploy?repo=https://github.com/sanskrutidhamal11/sanskrutidhamal11-portfolio)
+An editorial personal portfolio and living archive of Sanskruti Dhamal's work across management, consumer psychology, product, research, strategy, leadership, and independent building.
 
-An editorial personal portfolio and living archive of Sanskruti Dhamal's work across management, consumer psychology, product, research, strategy, leadership and independent building.
+## Tech Stack
 
-This folder is a complete Hatchable project. Everything the app needs is in these files: pages, API routes, database migrations, seed data, and the hatchable.toml manifest that declares the services and keys it uses.
+- **HTML5** (semantic structure & accessible dialogs)
+- **CSS3** (modern responsive grid, custom properties, fluid typography)
+- **Vanilla JavaScript** (dynamic editorial rendering, client-side routing)
+- Zero build step, zero dependencies — optimized for static deployment on **Vercel**
 
-## Run your own copy
+## Deployment to Vercel
 
-1. Go to https://hatchable.com/deploy
-2. Bring this folder as a .zip, or point the importer at a Git repository that contains it
-3. Your copy gets its own database, its own URL, and connects to your own keys
-
-## About Hatchable
-
-Hatchable is where AI-built apps go live. Connect the AI you already use and it can build, deploy, and run apps like this one for you.
-
-Built on Hatchable. https://hatchable.com
+This repository is ready for direct deployment on Vercel:
+1. Connect the repository to [Vercel](https://vercel.com).
+2. Framework Preset: **Other**.
+3. Root Directory: `./` (or leave default).
+4. No build command required.
