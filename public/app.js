@@ -1,32 +1,1490 @@
-const works=[
-{id:"01",cat:"FORMAL EXPERIENCE",title:"Strategy & Marketing Associate",org:"Wavy",date:"2026",summary:"Working across positioning, product communication, consumer psychology, content and execution for a socialising startup.",body:"A hands-on strategy and marketing role across the product, brand and customer-facing experience.",items:["Product positioning","Brand messaging","Website content and structure","App onboarding and content","Consumer psychology","Audience research","Content direction","Wavy Stories concept","Growth experiments","City-specific behaviour","Student communities","College / event opportunities","Social and content strategy"],tags:["Strategy","Marketing","Consumer Psychology","Product"]},
-{id:"02",cat:"RESEARCH",title:"Product & Business Research",org:"Contract Signed · Digital Product Opportunity Research",date:"Sep 2026",summary:"A research-led exploration of digital product opportunities, customer demand, pricing and market gaps.",body:"I researched the market to turn customer problems and market signals into potential digital product opportunities.",items:["50+ digital products researched","100+ customer problems explored","Pricing compared","Demand and business models compared","Market gaps identified","AI leverage considered","Acquisition opportunities explored","Opportunities translated into problem, target customer and potential value"],tags:["Research","Product","Business"],link:"https://digital-product-opportunity-researc-omega.vercel.app"},
-{id:"03",cat:"PROJECTS",title:"AI-assisted Product Building",org:"Independent Projects",date:"May 2025 — Present",summary:"Building digital products and prototypes with AI.",body:"An ongoing practice of turning ideas into working digital products and prototypes.",items:["AI-assisted product building","Vercel","GitHub","Rapid prototyping","Product experiments","Website building"],tags:["AI","Vercel","GitHub","Prototyping"]},
-{id:"04",cat:"FORMAL EXPERIENCE",title:"Strategy & Operations | Founder’s Office",org:"Especa",date:"Feb — Jul 2026",summary:"Worked closely with the founder across social media, content and day-to-day operations.",body:"A founder’s office role combining communication, execution and operational support.",items:["Social media","Content","Day-to-day operations","Founder’s office responsibilities","Supporting decisions and execution"],tags:["Operations","Strategy","Content"]},
-{id:"05",cat:"FORMAL EXPERIENCE",title:"Business Development & Strategic Partnerships Lead",org:"ARS Group of Ed. & Tech.",date:"Feb — Jul 2026",summary:"Managed communication across teams and helped plan important decisions and next steps.",body:"Worked on business development and partnerships through outreach and direct conversations.",items:["Communication across teams","Planning decisions and next steps","Business development","Strategic partnerships","Outreach","Direct conversations","Relationship building"],tags:["Business Development","Partnerships","Communication"]},
-{id:"06",cat:"FORMAL EXPERIENCE",title:"Corporate Operations & Program Management Lead",org:"ARS Group of Ed. & Tech.",date:"Nov 2025 — Jan 2026",summary:"Planned and executed large-scale events from sponsorship outreach to stage execution.",body:"An early hands-on program and operations experience involving planning, coordination and on-ground execution.",items:["Large-scale event planning","Sponsor outreach","Pitch decks","Event flow","Stage execution","Legal documentation","Approval documents","On-ground coordination"],tags:["Program Management","Operations","Events"]},
-{id:"07",cat:"LEADERSHIP",title:"Management Lead",org:"TEDxSinhgad COE",date:"2025 — 2026",summary:"Leadership, sponsorship, communication and execution within the TEDx organising team.",body:"Worked across sponsorship and event responsibilities while coordinating with a team under tight deadlines.",items:["Sponsorship outreach","Pitching","Team coordination","Event planning","Communication","Execution","Working under deadlines"],tags:["Leadership","Sponsorship","Events"],proof:"Recognised for taking initiative, staying dependable under deadlines and taking ownership without waiting for instructions."},
-{id:"08",cat:"FELLOWSHIP",title:"Fellow",org:"DoraDAO",date:"Aug 2026",summary:"Exploring how early-stage communities, products and teams work.",body:"A short fellowship experience focused on early-stage communities and teams.",items:["Early-stage communities","Products","Teams"],tags:["Fellowship","Communities"]},
-{id:"09",cat:"CONTENT & PERSONAL BRAND",title:"Personal Brand & Content",org:"LinkedIn",date:"2025 — Present",summary:"Building a public body of work around business, consumer psychology, product and communication.",body:"LinkedIn has become a distribution layer for my work, ideas and opportunities.",items:["12,132 followers","111 posts to 10K","584K+ impressions referenced in 10K milestone","64% audience from non-followers","Internship opportunity received from a LinkedIn post","Multiple opportunities generated through LinkedIn","3 job opportunities in 15 days"],tags:["Content","Communication","Distribution"],link:"https://www.linkedin.com/in/sanskrutidhamal"},
-{id:"10",cat:"EDUCATION",title:"B.Tech — Computer Engineering",org:"N.B. Navale Sinhgad College of Engineering, Solapur",date:"2025 — Present",summary:"Computer Engineering with strong academic performance and management leadership.",body:"College Rank 1, University Rank 5 and 10 SGPA in Semester 1.",items:["College Rank 1","University Rank 5","10 SGPA","93%+ Semester 1","Management Lead, TEDxSinhgad COE Core"],tags:["Computer Engineering","Leadership"]},
-{id:"11",cat:"EDUCATION",title:"School Leadership & Activities",org:"Sinhgad Institutes",date:"2011 — 2023",summary:"Early experience across debate, research writing, hosting and event management.",body:"A long-running foundation in communication and organising.",items:["School Debate Club","Research Writing Team","Anchoring & Hosting","Event Management Team","Class Representative","Cultural Committee"],tags:["Communication","Leadership","Events"]},
-{id:"12",cat:"EDUCATION",title:"Programs, Certifications & Recognition",org:"Multiple",date:"2025 — 2026",summary:"Selected learning and recognition supporting my broader business interests.",body:"A collection of structured programs, certifications and academic recognition.",items:["McKinsey Forward Program","Aspire Leaders Program","MY Bharat Certificate","First Rank Holder — Science Stream / PCMB","Class Topper — Semester 1"],tags:["Learning","Recognition","Entrepreneurship"]},
-{id:"13",cat:"PROJECTS",title:"Digital Product Opportunity Research",org:"Independent Research Project",date:"Sep 2026",summary:"Research into digital product opportunities, customer demand, pricing and market gaps.",body:"A research-led exploration to turn customer problems and market signals into potential product opportunities.",items:["50+ digital products researched","100+ customer problems explored","Pricing and demand compared","Business models and market gaps explored","AI leverage and acquisition opportunities assessed"],tags:["Research","Product","Business"],link:"https://digital-product-opportunity-researc-omega.vercel.app"},
-{id:"14",cat:"PROJECTS",title:"The Creative Club",org:"Independent Product Project",date:"2026",summary:"A creative community platform for discovering, connecting and showcasing creative talent.",body:"A product concept built around helping creative people find each other and share their work.",items:["Community platform concept","Creative talent discovery","Connection and showcasing"],tags:["Community","Product"]},
-{id:"15",cat:"PROJECTS",title:"Heartfelt",org:"Independent AI Product Experiment",date:"Dec 2025 — Present",summary:"An AI-assisted writing experiment focused on making writing feel human rather than generic or robotic.",body:"An early product experiment exploring how AI can help people express themselves in a more natural voice.",items:["Human-sounding writing","AI-assisted writing experience","Product-market-fit exploration"],tags:["AI","Writing","Product"]},
-{id:"16",cat:"PROJECTS",title:"Boardroom",org:"Independent Business & Community Experiment",date:"2025 — Present",summary:"A business, content and community experiment being reshaped into a more distinctive direction.",body:"An ongoing experiment in building a useful business-focused content and community concept.",items:["Business content","Community concept","Brand and positioning exploration"],tags:["Business","Content","Community"]},
-{id:"17",cat:"PROGRAMS",title:"McKinsey Forward",org:"PROGRAM",date:"2025 — 2026",summary:"McKinsey Forward",body:"McKinsey Forward",items:[],tags:["Program"]},
-{id:"18",cat:"PROGRAMS",title:"Aspire Leaders",org:"PROGRAM",date:"2025 — 2026",summary:"Aspire Leaders",body:"Aspire Leaders",items:[],tags:["Program"]}
+// Sanskruti Dhamal Portfolio — dejiajetomobi.com Visual Architecture & Comprehensive Content Bank
+
+const works = [
+  {
+    id: "01",
+    cat: "Leadership",
+    marker: "L",
+    status: "Incoming October 2026",
+    title: "Director of Strategy & Development (Incoming)",
+    org: "Project Sajag Aasman (PSA)",
+    date: "Oct 2026",
+    summary: "Incoming strategic leadership role driving curriculum scaling, institutional partnerships, and operational expansion for a youth life skills initiative.",
+    body: "Project Sajag Aasman (PSA) is a dedicated youth-focused non-profit initiative equipping young minds with crucial life skills rarely addressed in conventional schooling—such as public speaking, financial literacy, mental health awareness, debate, and consent education. Appointed to direct overarching organizational strategy, institutional outreach, and chapter expansion.",
+    items: [
+      "Curriculum expansion strategy across 6 core life skill tracks",
+      "Institutional outreach frameworks targeting secondary schools and youth centers",
+      "Strategic partnerships with educators, student chapters, and corporate CSR arms",
+      "Standard operating procedures (SOPs) for volunteer and mentor onboarding",
+      "Program impact assessment framework and student feedback loops",
+      "National community development and multi-city chapter roadmap"
+    ],
+    tags: ["Strategy", "Leadership", "Nonprofit", "Partnerships", "Youth Development"],
+    link: "https://projectsajagaasman.netlify.app/",
+    proof: "Official appointment as Director of Strategy & Development (Incoming October 2026). Featured across institutional networks.",
+    bg: "#eef3f2"
+  },
+  {
+    id: "02",
+    cat: "Strategy & Growth",
+    marker: "S",
+    status: "Active Workstream",
+    title: "Strategy & Marketing Associate",
+    org: "Wavy",
+    date: "2026",
+    summary: "Hands-on strategy, product communication, consumer psychology, conversion UX, and viral growth experiments for an offline socialization startup.",
+    body: "Led cross-functional growth, positioning, and user research across 9 comprehensive workstreams. Repositioned Wavy from superficial matching to interest-led authentic social connection, executed high-performing content experiments, and formulated college market penetration blueprints.",
+    items: [
+      "Workstream 1: Brand Positioning & Narrative Architecture — Shifted messaging from traditional dating fatigue to passion-based offline connection ('Find your tribe through shared passions').",
+      "Workstream 2: Website UX & Conversion Optimization — Redesigned value proposition hierarchy, testimonial modules, and reduced friction on download call-to-actions.",
+      "Workstream 3: LinkedIn & Industry Thought Leadership — Established executive communication highlighting modern socialization trends and consumer loneliness epidemics.",
+      "Workstream 4: Privacy & Trust Audit — Addressed Gen-Z safety apprehensions through transparent safety protocols, verified profiles, and moderated group activities.",
+      "Workstream 5: Short-Form Content Experiments & Wavy Stories — Ideated and scripted the 'Wavy Stories' video series; documented experiment achieved 10,947 organic views in 72 hours.",
+      "Workstream 6: Retention, Streak Systems & In-App Gamification — Drafted gamification loops around event check-ins, interest badges, and mutual icebreaker prompts.",
+      "Workstream 7: Bengaluru City-Specific Growth Plan — Mapped student clusters, co-working spaces, cafe hubs, and young professional corridors for targeted localized activations.",
+      "Workstream 8: Proposed 2-Month Campus Ambassador Programme — Built complete planning model: 2 ambassadors/campus, 5–7 micro-events/month, benchmarked target of 150+ downloads/ambassador/month.",
+      "Workstream 9: Cross-Functional Alignment — Maintained continuous feedback loops connecting developer sprint requirements, founder strategy, and real community feedback."
+    ],
+    tags: ["Product Strategy", "Consumer Psychology", "Growth Experiments", "Brand Positioning"],
+    link: "https://wavymatch.com/",
+    proof: "Wavy Stories content experiment reached 10,947 views in 3 days; full 2-month campus activation playbook drafted.",
+    bg: "#f5f3ec"
+  },
+  {
+    id: "03",
+    cat: "Research",
+    marker: "R",
+    status: "Completed & Deployed",
+    title: "Product & Business Research Lead",
+    org: "Contract Signed · Digital Product Opportunity Research",
+    date: "Sep 2026",
+    summary: "Rigorous empirical analysis of 50+ digital products and 100+ customer problem statements to identify underserved market gaps, pricing models, and AI leverage.",
+    body: "Executed an extensive, data-grounded commercial research initiative evaluating micro-SaaS, productivity suites, workflow tools, and consumer utility software. Developed an opportunity score matrix assessing problem severity, market willingness to pay, competitor vulnerability, and acquisition efficiency.",
+    items: [
+      "50+ digital software products benchmarked across feature depth, pricing tiers, and distribution channels",
+      "100+ recurring customer pain points and unfulfilled forum requests cataloged and categorized",
+      "Pricing comparison across free tier, self-serve SaaS ($9–$49/mo), and enterprise sales",
+      "Unit economics, retention drivers, and churn sensitivity modeled across utility categories",
+      "Evaluated AI leverage vectors (thin wrapper vs. proprietary fine-tuning vs. workflow native)",
+      "Synthesized acquisition pathways (organic SEO, cold outreach, micro-influencer channels)",
+      "Produced an interactive public research dashboard deployed on Vercel"
+    ],
+    tags: ["Market Research", "Product Strategy", "Pricing Analysis", "Competitive Intelligence"],
+    link: "https://digital-product-opportunity-researc-omega.vercel.app",
+    proof: "Contract signed commercial research initiative; fully deployed interactive public research repository.",
+    bg: "#ebe9e2"
+  },
+  {
+    id: "04",
+    cat: "Product",
+    marker: "P",
+    status: "Prototyping & Specs",
+    title: "Heartfelt AI — Product Architecture & UX",
+    org: "Heartfelt AI · Independent Product Experiment",
+    date: "Dec 2025 — Present",
+    summary: "Human-first AI writing assistant designed to eliminate robotic corporate voice and preserve emotional nuance, personal cadence, and authenticity.",
+    body: "Designed the complete product architecture, user experience specification, and prompt chaining pipeline for an assistive writing platform. Unlike generic LLM tools that generate hyper-polished, clichéd prose, Heartfelt prioritizes cadence, vulnerability, idiosyncratic vocabulary, and emotional rhythm.",
+    items: [
+      "UX Specification: Minimalist distraction-free canvas with progressive disclosure controls",
+      "Execution Engine: Two-stage prompt transformation pipeline (semantic extraction -> voice synthesis)",
+      "Memory & Knowledge Architecture: Local user voice profile mapping tone, sentence length variance, and banned buzzwords",
+      "MVP Scope & Guardrails: Strict anti-hallucination constraints and natural cadence preserving algorithms",
+      "Tested and calibrated across personal essays, high-stakes emails, and leadership correspondence"
+    ],
+    tags: ["AI Product", "Prompt Engineering", "UX Architecture", "Natural Language"],
+    proof: "Full architectural specification, UX wireframes, and calibrated prompt chains completed.",
+    bg: "#f4f1ea"
+  },
+  {
+    id: "05",
+    cat: "Writing & Brand",
+    marker: "W",
+    status: "Completed Client Audit",
+    title: "Strategic Personal Brand Audit & LinkedIn Optimisation",
+    org: "Dr. Arshad Sayyed Consulting Engagement",
+    date: "2026",
+    summary: "Comprehensive personal brand architecture, headline repositioning, and profile narrative overhaul for prominent leadership and academic authority.",
+    body: "Conducted a targeted narrative and personal brand audit for Dr. Arshad Sayyed. Analyzed audience expectations, credibility signals, and discoverability keywords. Restructured headline, About section, featured accomplishments, and content strategy to convey high-signal authority and approachable mentorship.",
+    items: [
+      "Strategic positioning analysis and competitive benchmark against prominent industry authorities",
+      "High-impact headline restructuring aligning credentials with executive search intent",
+      "About section narrative rewritten from dry resume recap to compelling story of impact and vision",
+      "Featured section media curation emphasizing keynotes, honors, and institutional leadership",
+      "Algorithmic discoverability audit optimizing for relevant academic and executive searches"
+    ],
+    tags: ["Brand Strategy", "Executive Positioning", "LinkedIn Optimization", "Copywriting"],
+    proof: "Directly endorsed and commended by Dr. Arshad Sayyed for exceptional strategic clarity and narrative precision.",
+    bg: "#f2f0eb"
+  },
+  {
+    id: "06",
+    cat: "Writing & Brand",
+    marker: "W",
+    status: "Verified Milestone",
+    title: "LinkedIn Personal Brand & Distribution Engine",
+    org: "LinkedIn Distribution Engine",
+    date: "2025 — Present",
+    summary: "Organic audience growth from 0 to 12,000+ followers through high-signal essays on product, business, consumer psychology, and personal leverage.",
+    body: "Built a high-engagement personal distribution channel strictly through original, analytical writing without engagement pods, rage-bait, or superficial growth hacks. Demonstrates audience acquisition, viral mechanics, retention, and content-to-opportunity conversion.",
+    items: [
+      "12,132+ authentic professional followers built organically from scratch",
+      "111 posts authored to cross the 10,000-follower milestone",
+      "584,000+ impressions referenced during the 10K milestone review",
+      "64% non-follower reach proving algorithm-friendly discovery loops",
+      "Generated 3 full-time job opportunities and multiple advisory offers within 15 days",
+      "Inbound internship and research contracts converted directly from single high-signal posts",
+      "7-day snapshot record: 6,728 profile views, 13,557 impressions, 281 search appearances"
+    ],
+    tags: ["Content Strategy", "Distribution", "Audience Growth", "Consumer Psychology"],
+    link: "https://www.linkedin.com/in/sanskrutidhamal",
+    proof: "Documented 12K+ verified following, 584K+ organic post impressions, and inbound contract conversions.",
+    bg: "#ebedf0"
+  },
+  {
+    id: "07",
+    cat: "Operations",
+    marker: "O",
+    status: "Completed",
+    title: "Strategy & Operations | Founder’s Office",
+    org: "Especa",
+    date: "Feb — Jul 2026",
+    summary: "Founder-level execution spanning cross-platform social media strategy, editorial calendars, and day-to-day business operations.",
+    body: "Partnered directly with the founder to streamline business workflows, align company messaging across customer touchpoints, and manage operational cadences during growth phases.",
+    items: [
+      "Multichannel social media growth strategy and weekly editorial production",
+      "Operational workflows connecting customer support, product feedback, and marketing",
+      "Strategic research decks supporting key founder decisions and resource allocations",
+      "Process documentation and internal standard operating procedures (SOPs)",
+      "Direct participation in weekly strategic reviews and customer success retrospectives"
+    ],
+    tags: ["Operations", "Founder's Office", "Process Optimization", "Content Strategy"],
+    bg: "#f0efe9"
+  },
+  {
+    id: "08",
+    cat: "Operations",
+    marker: "O",
+    status: "Completed",
+    title: "Business Development & Strategic Partnerships Lead",
+    org: "ARS Group of Ed. & Tech.",
+    date: "Feb — Jul 2026",
+    summary: "Directed B2B outreach, strategic partner negotiations, and inter-departmental communication pipelines.",
+    body: "Led partnership initiatives and commercial conversations with external stakeholders, institutions, and educational vendors to expand corporate footprint and programmatic alliances.",
+    items: [
+      "Designed outreach campaigns targeting regional colleges, corporate sponsors, and EdTech vendors",
+      "Formulated commercial proposals, partnership frameworks, and mutual value decks",
+      "Facilitated cross-functional collaboration between program coordinators, design, and finance",
+      "Maintained CRM pipelines and follow-up cadences ensuring zero deal leakage",
+      "Negotiated deliverable timelines and co-marketing commitments"
+    ],
+    tags: ["Business Development", "Partnerships", "Negotiation", "B2B Outreach"],
+    bg: "#f4f1ec"
+  },
+  {
+    id: "09",
+    cat: "Operations",
+    marker: "O",
+    status: "Completed",
+    title: "Corporate Operations & Program Management Lead",
+    org: "ARS Group of Ed. & Tech.",
+    date: "Nov 2025 — Jan 2026",
+    summary: "End-to-end event management, sponsor acquisition, legal documentation, and live stage coordination for large-scale institutional summits.",
+    body: "Oversaw the complete lifecycle of large-scale flagship corporate and student events, handling everything from initial sponsorship pitch decks to legal sign-offs and live backstage stage production.",
+    items: [
+      "Comprehensive event planning, budget tracking, and vendor coordination",
+      "High-conversion sponsorship pitch decks securing institutional participation",
+      "Drafted formal legal documentation, compliance approvals, and institutional MoUs",
+      "Minute-by-minute stage cue execution, dignitary hosting, and audience logistics",
+      "Coordinated on-ground operations crew of 20+ volunteers under strict timelines"
+    ],
+    tags: ["Program Management", "Event Operations", "Legal & Compliance", "Sponsorship"],
+    bg: "#eaeae8"
+  },
+  {
+    id: "10",
+    cat: "Leadership",
+    marker: "L",
+    status: "Official Recognition",
+    title: "Management Lead",
+    org: "TEDxSinhgad COE",
+    date: "2025 — 2026",
+    summary: "Core team leadership driving corporate sponsorships, speaker logistics, stage coordination, and high-stakes deadline execution.",
+    body: "Steered core management and sponsorship functions for the official licensed TEDx conference. Operated in high-pressure environments requiring flawless coordination between faculty, external speakers, sponsors, and student production crews.",
+    items: [
+      "Strategic sponsorship pitching and partnership collateral creation",
+      "Speaker curation, liaison support, and accommodation/travel orchestration",
+      "Coordinated cross-departmental deadlines across marketing, curation, and technical stage crews",
+      "Crisis management and rapid resolution of live event schedule bottlenecks",
+      "Post-event reporting, documentation, and sponsor relationship maintenance"
+    ],
+    tags: ["TEDx Leadership", "Sponsorship", "Team Management", "Event Production"],
+    proof: "Officially recommended by Dr. Arshad Sayyed and Nandini Shimpale for unwavering dependability, proactiveness, and exemplary crisis management under deadline pressure.",
+    bg: "#edebe6"
+  },
+  {
+    id: "11",
+    cat: "Operations",
+    marker: "O",
+    status: "Completed",
+    title: "Outreach & Operations Associate",
+    org: "IntelloByte",
+    date: "2026",
+    summary: "Streamlining commercial outreach, prospect qualification, and outbound communication systems.",
+    body: "Handled lead management workflows and targeted business communication for software and technical services.",
+    items: [
+      "Outbound prospect qualification and contact database curation",
+      "Cold email and LinkedIn messaging sequencing with high personalization",
+      "Tracking conversion rates from initial outreach to qualified discovery call",
+      "Pipeline reporting and cadence synchronization with business development team"
+    ],
+    tags: ["Outreach Operations", "Lead Generation", "Communication"],
+    bg: "#f1f0eb"
+  },
+  {
+    id: "12",
+    cat: "Strategy & Growth",
+    marker: "S",
+    status: "Completed",
+    title: "Business Development Associate",
+    org: "LSM",
+    date: "2026",
+    summary: "Commercial outreach, prospect relationship management, and partnership scoping.",
+    body: "Supported revenue and alliance efforts through structured market mapping, identifying high-potential business opportunities and executing initial contact campaigns.",
+    items: [
+      "Market segment mapping and competitor analysis",
+      "Pitch deck customization for enterprise and academic stakeholders",
+      "Managing correspondence and scheduling exploratory briefing sessions",
+      "CRM tracking and follow-up cadence optimization"
+    ],
+    tags: ["Business Development", "Commercial Growth", "Outreach"],
+    bg: "#f2edf2"
+  },
+  {
+    id: "13",
+    cat: "Writing & Brand",
+    marker: "W",
+    status: "Completed",
+    title: "Strategic Content & Video Narrative Lead",
+    org: "Fitastic Media Pune",
+    date: "2026",
+    summary: "Video copywriting, narrative framing, and psychological hooks for AI product showcases and creator campaigns.",
+    body: "Analyzed short-form visual retention curves to script compelling video copy for AI software tools and digital products, ensuring viewers retained key product value in the opening 3 seconds.",
+    items: [
+      "Psychological hook writing designed for rapid social feed scroll interruption",
+      "Scripting product demo videos translating complex AI features into everyday benefits",
+      "Storyboarding visual pacing with video editors and motion designers",
+      "Testing voiceover tone variations to maximize watch-through rates and click-throughs"
+    ],
+    tags: ["Video Copywriting", "Consumer Psychology", "Content Strategy", "AI Media"],
+    bg: "#edf3ee"
+  },
+  {
+    id: "14",
+    cat: "Leadership",
+    marker: "L",
+    status: "Fellowship Graduate",
+    title: "Fellow",
+    org: "DoraDAO",
+    date: "Aug 2026",
+    summary: "Intensive fellowship studying decentralized governance, builder ecosystems, and early-stage product coordination.",
+    body: "Selected for the competitive DoraDAO fellowship program to study emerging open-source funding primitives, decentralized community building, and hackathon incubation models.",
+    items: [
+      "Deep-dive sessions into decentralized community governance and contributor incentives",
+      "Product teardowns of open developer tooling and micro-grant allocation mechanisms",
+      "Collaborative problem-solving with an international cohort of student builders"
+    ],
+    tags: ["Fellowship", "Decentralized Tech", "Community Architecture"],
+    bg: "#f6f3eb"
+  },
+  {
+    id: "15",
+    cat: "Product",
+    marker: "P",
+    status: "Exploratory Concept",
+    title: "Sales Copilot — AI Product Architecture & GTM",
+    org: "Sales Copilot · Independent Exploration",
+    date: "2026",
+    summary: "Exploratory AI tool architecture designed to assist SDRs and founders with context-aware prospect research and personalized outreach.",
+    body: "Formulated end-to-end product requirements, competitive benchmarking against existing sales enablement tools, pricing architecture, and landing page copy for an intelligent sales co-pilot.",
+    items: [
+      "Detailed Product Requirements Document (PRD) detailing user personas and trigger workflows",
+      "Competitor feature comparison matrix (Apollo, Clay, Lavender) identifying unaddressed gaps",
+      "Multi-tier pricing strategy designed for self-serve freelancers up to sales teams of 10",
+      "High-converting landing page wireframe and benefit-driven copywriting",
+      "AI prompt templates for automated LinkedIn bio and recent activity synthesis"
+    ],
+    tags: ["AI Product", "Sales Tech", "PRD", "GTM Strategy"],
+    bg: "#eef2f5"
+  },
+  {
+    id: "16",
+    cat: "Product",
+    marker: "P",
+    status: "Exploratory Concept",
+    title: "AI Resume Software — Chat-to-Form & ATS Engine",
+    org: "Independent AI Software Concept",
+    date: "2026",
+    summary: "Conversational chat-to-form resume builder that extracts verified success indicators from raw career notes and formats ATS-optimized resumes.",
+    body: "Designed the complete interaction workflow for an AI-powered resume builder that replaces rigid form-filling with an intuitive conversational interview. The engine parses target job descriptions, identifies skill gaps, and guides the candidate to formulate quantifiable achievement bullets.",
+    items: [
+      "Conversational chat-to-form onboarding architecture eliminating blank-page anxiety",
+      "Job description NLP parser extracting keyword frequencies and implied requirements",
+      "Automated metric and action-verb enhancement prompts based on the STAR methodology",
+      "Live side-by-side clean PDF preview engine",
+      "Strict ATS compliance formatting rules (single column, semantic headers, standard fonts)"
+    ],
+    tags: ["AI Product", "UX Flow", "ATS Optimization", "Career Tech"],
+    bg: "#f0f4ee"
+  },
+  {
+    id: "17",
+    cat: "Concepts & Archive",
+    marker: "X",
+    status: "Framework & SOPs",
+    title: "Load2Site — Turnkey SMB Web Service & SOPs",
+    org: "Load2Site · Service-to-Product Architecture",
+    date: "2026",
+    summary: "Turnkey digital storefront service concept and operational playbook for service-based SMBs (gyms, salons, dental clinics, homestays).",
+    body: "Developed a repeatable service-to-product operational model designed to launch professional, high-converting websites for local service businesses within 48 hours without high custom development overhead.",
+    items: [
+      "Modular client onboarding questionnaires tailored to 4 key SMB verticals",
+      "Fixed-tier pricing packages with transparent deliverables and zero surprise fees",
+      "Standard Operating Procedures (SOPs) for rapid staging, copywriting, and domain launch",
+      "Client revision and approval workflows designed to eliminate scope creep"
+    ],
+    tags: ["SMB Digitalization", "Service Design", "SOPs", "Packaging"],
+    bg: "#f5f1eb"
+  },
+  {
+    id: "18",
+    cat: "Product",
+    marker: "P",
+    status: "Product Concept",
+    title: "The Creative Club — Creator Discovery Network",
+    org: "The Creative Club",
+    date: "2026",
+    summary: "Digital community platform concept built for emerging designers, writers, and creative builders to showcase works and find collaborators.",
+    body: "Conceptualized a social discovery platform addressing the fragmentation of creative portfolios across Behance, GitHub, and Twitter. Focused on micro-critiques, peer matching, and cross-disciplinary co-building.",
+    items: [
+      "Community onboarding flow with verified portfolio submissions",
+      "Peer feedback exchange mechanics with karma reputation incentives",
+      "Creator discovery directory indexed by skills, availability, and aesthetic style",
+      "Collaborative project rooms with built-in asset sharing and milestone tracking"
+    ],
+    tags: ["Community Platform", "Creator Economy", "Product Design"],
+    bg: "#f3ede8"
+  },
+  {
+    id: "19",
+    cat: "Leadership",
+    marker: "L",
+    status: "Ongoing Initiative",
+    title: "The Boardroom — Oratory & Executive Community",
+    org: "The Boardroom Initiative",
+    date: "2025 — Present",
+    summary: "Interactive student initiative centered on executive presence, debate, corporate etiquette, and public communication mastery.",
+    body: "Founded and designed an offline and online development initiative to help aspiring student leaders bridge the gap between classroom theory and real-world corporate boardroom discussions.",
+    items: [
+      "Structured debate and boardroom simulation case study curriculum",
+      "Weekly public speaking drills with structured peer evaluation rubrics",
+      "Executive presence workshops covering pitch delivery, body language, and negotiation",
+      "Guest speaker sessions with industry leaders and startup founders"
+    ],
+    tags: ["Executive Presence", "Public Speaking", "Community Leadership", "Communication"],
+    bg: "#f5f0ec"
+  },
+  {
+    id: "20",
+    cat: "Concepts & Archive",
+    marker: "X",
+    status: "Brand Concept",
+    title: "Cremonta — Artisanal Brand Identity & Operations",
+    org: "Cremonta",
+    date: "2026",
+    summary: "Brand positioning, visual identity, and product line planning for a premium artisanal dessert and lifestyle concept.",
+    body: "Explored luxury consumer psychology, packaging design, and direct-to-consumer operational logistics for a curated lifestyle culinary concept.",
+    items: [
+      "Brand moodboard and typographic identity guidelines",
+      "Product line taxonomy, pricing margins, and ingredient supply chain sourcing",
+      "Packaging ergonomics and unboxing customer experience architecture",
+      "Direct-to-consumer digital ordering and local fulfillment strategy"
+    ],
+    tags: ["Brand Identity", "Packaging Design", "D2C Concept", "Consumer Experience"],
+    bg: "#f7efe9"
+  },
+  {
+    id: "21",
+    cat: "Concepts & Archive",
+    marker: "X",
+    status: "UX Architecture",
+    title: "Load2Cart — E-commerce Store Architecture & UX",
+    org: "Load2Cart",
+    date: "2026",
+    summary: "High-converting e-commerce template architecture designed to optimize checkout velocity and reduce mobile cart abandonment.",
+    body: "Analyzed top D2C checkout flows to engineer a streamlined, mobile-first shopping experience with zero-friction cart drawers and instant express payments.",
+    items: [
+      "Mobile-first catalog browsing and product card hierarchy",
+      "1-click checkout slide-in drawer minimizing steps to order completion",
+      "Upsell and cross-sell trigger logic tailored to cart item combinations",
+      "Trust badge positioning and social proof review widgets"
+    ],
+    tags: ["E-Commerce UX", "Conversion Optimization", "Cart Architecture"],
+    bg: "#edf1f4"
+  },
+  {
+    id: "22",
+    cat: "Concepts & Archive",
+    marker: "X",
+    status: "Active Workflow",
+    title: "Productivity Systems & Personal Workflow Architecture",
+    org: "Personal Systems & Notion Workspaces",
+    date: "2024 — Present",
+    summary: "Comprehensive digital productivity architecture integrating Notion, PARA method, task batching, and automated review cycles.",
+    body: "Engineered personal productivity and team knowledge bases using first-principles operational design. Streamlines project status tracking, writing pipelines, research synthesis, and weekly reflection cadences.",
+    items: [
+      "Notion-based Second Brain system with relational project and resource databases",
+      "Daily and weekly review checklists maintaining accountability and momentum",
+      "Content creation pipeline tracking ideas from spark to published essay",
+      "Documented template libraries for project kickoffs and meeting notes"
+    ],
+    tags: ["Productivity Systems", "Knowledge Management", "Workflow Design"],
+    bg: "#f0f2ee"
+  },
+  {
+    id: "23",
+    cat: "Concepts & Archive",
+    marker: "X",
+    status: "Prototyping Sandbox",
+    title: "Archive & Early Experiments",
+    org: "Independent Experiments",
+    date: "2024 — 2026",
+    summary: "Collection of early tools including Instagram media extension, AI YouTube automation research, and Sinhgad Entrepreneurship Challenge.",
+    body: "A living repository of exploratory coding, micro-tools, and competitive business hackathons that shaped early understanding of software delivery and audience dynamics.",
+    items: [
+      "Instagram media saver browser utility script and local asset archiver",
+      "Sinhgad Entrepreneurship Challenge: Pitch deck, business model canvas, and finalist presentation",
+      "Automated AI YouTube channel concept research analyzing content formats and retention loops",
+      "Rapid UI/UX clones exploring modern web animation libraries"
+    ],
+    tags: ["Prototyping", "Browser Extensions", "Hackathons", "Early Experiments"],
+    bg: "#f3f0f4"
+  },
+  {
+    id: "24",
+    cat: "Education & Learning",
+    marker: "E",
+    status: "College Rank 1 · Univ Rank 5",
+    title: "B.Tech — Computer Engineering (Expected 2029)",
+    org: "N.B. Navale Sinhgad College of Engineering, Solapur",
+    date: "2025 — 2029 (Expected)",
+    summary: "College Rank 1, University Rank 5, and perfect 10 SGPA in Semester 1 (93.67%). Demonstrated academic excellence combined with campus leadership.",
+    body: "Pursuing B.Tech in Computer Engineering with an expected graduation in 2029. Recognized with public billboard honors, university-level academic standing, and leadership roles across college initiatives.",
+    items: [
+      "Semester 1: Perfect 10 SGPA, 93.67% marks, College Rank 1, University Rank 5",
+      "Overall Cumulative Grade Point Average: 9.8 CGPA (89.67% aggregate performance)",
+      "Official college billboard recognition and public achievement commemoration",
+      "First Rank Holder across Science Stream / PCMB in junior college",
+      "Management Lead of official TEDxSinhgad COE Core team"
+    ],
+    tags: ["Computer Engineering", "Academic Excellence", "Rank 1", "University Rank 5"],
+    proof: "College Rank 1, University Rank 5, billboard recognition, official transcripts, and 28k+ impressions LinkedIn academic milestone.",
+    bg: "#eef1ed"
+  },
+  {
+    id: "25",
+    cat: "Education & Learning",
+    marker: "E",
+    status: "Certified Graduate",
+    title: "McKinsey Forward Program",
+    org: "McKinsey & Company",
+    date: "2025 — 2026",
+    summary: "Competitive global program focused on structured digital problem-solving, cognitive flexibility, adaptability, and high-impact communication.",
+    body: "Completed McKinsey & Company's flagship young leader curriculum, mastering structured problem-solving frameworks (issue trees, hypothesis-driven exploration), emotional intelligence under pressure, and digital fluency.",
+    items: [
+      "Structured business problem-solving and root cause analysis",
+      "Digital transformation paradigms and AI workflow integration",
+      "Adaptability, self-leadership, and cognitive resilience in dynamic workplaces",
+      "Clear, persuasive executive communication frameworks"
+    ],
+    tags: ["McKinsey Forward", "Structured Problem Solving", "Business Acumen"],
+    proof: "Officially certified McKinsey Forward program graduate.",
+    bg: "#eaf0f2"
+  },
+  {
+    id: "26",
+    cat: "Education & Learning",
+    marker: "E",
+    status: "Fellowship Graduate",
+    title: "Aspire Leaders Program",
+    org: "Aspire Institute (Founded by Harvard Business School Professors)",
+    date: "2025 — 2026",
+    summary: "Global leadership fellowship focusing on social impact, ethical decision-making, critical thinking, and international collaboration.",
+    body: "Selected for the highly competitive global leadership fellowship founded by Harvard Business School faculty. Engaged with emerging youth leaders across 100+ countries on ethics, cross-cultural collaboration, and systems-level social innovation.",
+    items: [
+      "Harvard faculty-led modules on values-based leadership and moral reasoning",
+      "Critical thinking and ethical evaluation of technological disruption",
+      "Cross-cultural team projects addressing community-level challenges",
+      "Professional development and strategic action planning"
+    ],
+    tags: ["Aspire Leaders", "Global Fellowship", "Harvard Curriculum", "Ethics"],
+    proof: "Completed Aspire Leaders Program modules and interactive cohort sessions.",
+    bg: "#f3eff5"
+  },
+  {
+    id: "27",
+    cat: "Education & Learning",
+    marker: "E",
+    status: "Multiple Accreditations",
+    title: "Professional Certifications & Masterclasses",
+    org: "IBM · Google Cloud · MSME IGTR · Think School · LetsUpgrade",
+    date: "2024 — 2026",
+    summary: "Comprehensive technical and business coursework spanning Product Management, Generative AI, Data Science, and Public Communication.",
+    body: "Proactively completed rigorous external programs and bootcamps to build deep domain literacy across AI development, business strategy, and product management.",
+    items: [
+      "IBM Product Management Professional Program (Coursera)",
+      "Google Cloud: Introduction to Generative AI & Build Gemini-Powered Animated Story Generator",
+      "MSME IGTR: Entrepreneurship & Business Incubation Program",
+      "Think School: Communication, Storytelling & Business Masterclass",
+      "LetsUpgrade: Data Science with Python & Prompt Engineering Bootcamps",
+      "Ministry of Youth Affairs: MY Bharat Official Certificate of Merit"
+    ],
+    tags: ["Product Management", "Generative AI", "Data Science", "Certifications"],
+    proof: "Accredited credentials from IBM, Google Cloud, MSME, and Government of India.",
+    bg: "#f7f5ed"
+  },
+  {
+    id: "28",
+    cat: "Education & Learning",
+    marker: "E",
+    status: "12-Year Track Record",
+    title: "Foundational Leadership & Oratory Foundations",
+    org: "Sinhgad Institutes",
+    date: "2011 — 2023",
+    summary: "12-year foundation in competitive debate, research writing, stage hosting, and student government.",
+    body: "Long-running engagement in institutional leadership, speech competitions, and event organizing that cultivated core strengths in persuasion, crowd engagement, and administrative discipline.",
+    items: [
+      "Captain of School Debate Club and competitive inter-school orator",
+      "Research Writing Team lead authoring student journal publications",
+      "Main stage master of ceremonies (emcee) for annual cultural gatherings",
+      "Class Representative and Cultural Committee coordinator"
+    ],
+    tags: ["Public Speaking", "Debate", "Leadership", "Event Hosting"],
+    bg: "#f0efe9"
+  }
 ];
-// Projects are included in the Things I’ve done work archive below.
-const cats=["ALL WORK","FORMAL EXPERIENCE","PROJECTS","LEADERSHIP","RESEARCH","PROGRAMS","CONTENT & PERSONAL BRAND","EDUCATION"];
-const filters=document.getElementById("filters"),list=document.getElementById("workList");
-cats.forEach(function(c,i){var b=document.createElement("button");b.className="filter"+(i===0?" active":"");b.textContent=String(i).padStart(2,"0")+" — "+c;b.onclick=function(){document.querySelectorAll(".filter").forEach(function(x){x.classList.remove("active")});b.classList.add("active");render(c)};filters.appendChild(b)});
-function render(cat){cat=cat||"ALL WORK";var arr=cat==="ALL WORK"?works:works.filter(function(w){return w.cat===cat});list.innerHTML=arr.map(function(w){return '<article class="work-item" data-id="'+w.id+'"><span class="num">'+w.id+'</span><div><div class="work-title">'+w.title+'</div><span class="work-org">'+w.org+'</span></div><span class="work-date">'+w.date+'</span><span class="arrow">↗</span></article>'}).join("");list.querySelectorAll(".work-item").forEach(function(el){el.onclick=function(){openWork(works.find(function(w){return w.id===el.dataset.id}))}})}
-render();
-// Project cards are now part of the work archive.
-const drawer=document.getElementById("drawer"),backdrop=document.getElementById("backdrop"),content=document.getElementById("drawerContent");
-function openWork(w){content.innerHTML='<div class="eyebrow">'+w.cat+' · '+w.date+'</div><h2>'+w.title+'</h2><p class="summary">'+w.summary+'</p><div class="detail-section"><h4>MY ROLE</h4><p>'+w.body+'</p></div><div class="detail-section"><h4>WHAT I WORKED ON</h4><ul>'+w.items.map(function(x){return "<li>"+x+"</li>"}).join("")+'</ul></div>'+(w.proof?'<div class="detail-section"><h4>PROOF</h4><p>'+w.proof+'</p></div>':"")+'<div class="detail-section"><h4>SKILLS / AREAS</h4><div class="tags">'+w.tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join("")+'</div></div>'+(w.link?'<a class="drawer-link" target="_blank" rel="noreferrer" href="'+w.link+'">View proof / project ↗</a>':"");drawer.classList.add("open");backdrop.classList.add("open");document.body.style.overflow="hidden"}
-function closeDrawer(){drawer.classList.remove("open");backdrop.classList.remove("open");document.body.style.overflow=""}
-document.getElementById("close").onclick=closeDrawer;backdrop.onclick=closeDrawer;document.addEventListener("keydown",function(e){if(e.key==="Escape")closeDrawer()});
-// Navigation removed; no menu toggle is needed.
+
+// 11 Complete Articles matching dejiajetomobi.com reader
+const articles = [
+  {
+    id: "persuade",
+    date: "OCTOBER 20, 2026",
+    title: "How to Persuade When You Have No Metrics (And Why Clarity Beats Credentials)",
+    content: [
+      "Early in your career, you face a universal catch-22: clients and collaborators want to see proven numbers, but you need someone to give you a chance before you can generate those numbers. Most people respond to this dilemma by embellishing modest statistics or adopting corporate jargon that sounds impressive but explains nothing.",
+      "The counter-intuitive solution is to stop trying to sound qualified and start being ruthlessly clear. When you analyze a business from the outside and identify a concrete friction point—an ambiguous value proposition, an onboarding drop-off, or an unaddressed customer objection—and you present a coherent solution with zero fluff, you instantly differentiate yourself from 99% of job seekers.",
+      "Clarity is the ultimate surrogate for seniority. An operator who can clearly diagnose why users leave at step three of a funnel commands more genuine authority than an executive with ten bullet points of vague accomplishments."
+    ],
+    quote: "Clarity is the ultimate surrogate for seniority. When you diagnose a real problem without fluff, you bypass credentials."
+  },
+  {
+    id: "focus",
+    date: "OCTOBER 08, 2026",
+    title: "The Architecture of Deep Focus: Why Output is a Byproduct of Environment",
+    content: [
+      "Most productivity advice treats focus as an act of raw willpower. You are told to sit down, grit your teeth, and resist the temptation to check notifications. But willpower is a finite cognitive fuel. High-output operators do not possess superhuman discipline; they architect physical and digital environments where distraction is structurally inconvenient.",
+      "In building research databases, analyzing 50+ products, and writing consistent essays, I learned that flow state requires three non-negotiables: single-threaded task definition, clean information hygiene, and pre-committed completion criteria. If you sit down at your desk without knowing exactly what 'done' looks like in the next 90 minutes, your brain will naturally wander toward low-resistance dopamine.",
+      "Protecting your attention is not merely a self-improvement habit; it is a competitive moat. In an economy increasingly flooded with automated, superficial content, deep, uninterrupted synthesis is one of the few skills that cannot be commoditized."
+    ],
+    quote: "High-output operators do not possess superhuman discipline; they architect environments where distraction is structurally inconvenient."
+  },
+  {
+    id: "branding",
+    date: "SEPTEMBER 24, 2026",
+    title: "The Minimalist Strategy for Personal Branding: 0 to 12K Without Gimmicks",
+    content: [
+      "When people decide to 'build a personal brand', their first instinct is usually cosmetic: booking photoshoots, designing complex logo marks, and scheduling generic motivational quotes across five platforms. They treat personal branding as a marketing campaign instead of what it truly is: public documentation of your actual thinking.",
+      "Growing my LinkedIn network from 0 to over 12,000 followers across 111 posts worked because I adhered to a simple filter: share the exact reasoning behind real decisions, breakdown products with genuine curiosity, and never publish anything that reads like a LinkedIn template. 64% of my audience reach came from non-followers simply because the algorithm favors posts that provoke thoughtful discussion rather than empty likes.",
+      "The goal of personal branding is not fame; it is distribution for your future work. When your writing reflects genuine taste and intellectual honesty, opportunities seek you out instead of you having to cold-pitch into the void."
+    ],
+    quote: "The goal of personal branding is not fame; it is distribution for your future work."
+  },
+  {
+    id: "networking",
+    date: "SEPTEMBER 10, 2026",
+    title: "The Art of High-Signal Networking: Why Value-First Beats 'Let's Connect'",
+    content: [
+      "Every day, senior leaders receive dozens of cold messages that say: 'I'd love to pick your brain for 15 minutes' or 'I am looking for a mentor.' These messages fail because they request an asymmetric withdrawal of someone's most valuable asset—their time—without offering anything in return.",
+      "High-signal networking operates on the law of pre-paid value. Before reaching out to a founder or executive, study their recent product release, review their public interviews, or audit their user experience. Send a succinct three-paragraph note highlighting one specific thing they did exceptionally well and one constructive observation they can immediately test.",
+      "When you lead with homework rather than hunger, you change the dynamic entirely. You are no longer an applicant asking for a favor; you are a peer initiating a substantive professional dialogue."
+    ],
+    quote: "When you lead with homework rather than hunger, you are no longer asking for a favor; you are initiating a peer dialogue."
+  },
+  {
+    id: "speaking",
+    date: "AUGUST 28, 2026",
+    title: "The Psychology of Unforgettable Public Speaking: Stage Presence as Strategy",
+    content: [
+      "Having spent over a decade participating in competitive debate, hosting institutional summits, and managing TEDx events, I have watched hundreds of speakers take the stage. The difference between an unforgettable speech and a forgettable lecture has very little to do with slide design and everything to do with emotional conviction.",
+      "Great orators understand that an audience will forget 90% of the data points you cite, but they will never forget how you made them feel about their own potential. A compelling presentation begins by establishing tension—an uncomfortable truth about the status quo—and progressively resolves that tension through structured narrative storytelling.",
+      "Stage presence is not an innate genetic gift; it is calibrated breath control, intentional stillness, and the courage to hold silence. When you stop rushing to fill every second with words, the room leans in."
+    ],
+    quote: "Great orators establish tension about the status quo and progressively resolve that tension through structured storytelling."
+  },
+  {
+    id: "understood",
+    date: "AUGUST 14, 2026",
+    title: "The Art of Being Understood: Communicating Complex Ideas Simply",
+    content: [
+      "Simplicity is not the absence of nuance; it is the ultimate expression of mastery. Anyone can hide behind technical jargon and multisyllabic vocabulary to sound intelligent. It takes genuine rigor to take an intricate machine learning architecture or a complex go-to-market model and explain it so that a 12-year-old and a Fortune 500 CEO both immediately grasp the core mechanism.",
+      "When collaborating across cross-functional teams—where engineers think in constraints, founders think in growth curves, and designers think in user empathy—the most valuable person in the room is the translator. The operator who can summarize forty minutes of chaotic debate into three crisp bullet points and an action item moves projects forward faster than any individual contributor.",
+      "Before sending an email, drafting a specification, or pitching an initiative, ask yourself: 'If the recipient only scans the first two sentences, do they know exactly what needs to happen next?' If the answer is no, edit until it hurts."
+    ],
+    quote: "Simplicity is not the absence of nuance; it is the ultimate expression of mastery."
+  },
+  {
+    id: "teams",
+    date: "JULY 30, 2026",
+    title: "How 3-Person Teams Beat Big Companies: Velocity, Taste, and Conviction",
+    content: [
+      "Incumbent corporations have unlimited capital, hundreds of specialized engineers, and established brand moats. Yet time and time again, nimble three-person squads out-innovate them. Why? Because large companies suffer from coordination tax: every decision requires four meetings, two committees, and a legal sign-off.",
+      "A lean team with strong taste and modern tools operates with near-zero latency between insight and execution. If a customer points out a confusing workflow at 10 AM, a small team can redesign it by 11 AM, deploy it to production by 1 PM, and evaluate the conversion impact by dinner.",
+      "Velocity is not just about moving fast; it is about compounding feedback loops. The team that completes ten iterative learning cycles in a week will inevitably surpass the team that spends six months polishing an unvalidated concept."
+    ],
+    quote: "Velocity is not just about speed; it is about compounding feedback loops between insight and execution."
+  },
+  {
+    id: "shipping",
+    date: "JULY 16, 2026",
+    title: "Stop Optimising, Start Shipping: Why Real Artifacts Crush Imaginary Plans",
+    content: [
+      "Planning feels like progress because it burns mental calories without carrying any risk of rejection. You can spend weeks crafting the perfect business plan, organizing your Figma components, or tweaking your development environment, and you will never have to face the painful reality of a user who simply does not care.",
+      "The only antidote to perfectionist paralysis is shipping. A crude prototype deployed on a live URL teaches you more in 24 hours than two months of theoretical contemplation. Every working artifact—a deployed research database, an authored essay, or an interactive prototype—becomes a permanent asset that works for you while you sleep.",
+      "Stop preparing to start. Put the artifact into the world, observe where people stumble, and iterate based on reality rather than imagination."
+    ],
+    quote: "A crude prototype deployed on a live URL teaches you more in 24 hours than two months of theoretical contemplation."
+  },
+  {
+    id: "congruence",
+    date: "JULY 02, 2026",
+    title: "The Power of Congruence: When Your Words, Work, and Values Align",
+    content: [
+      "In personal leadership and professional growth, congruence is the state where what you say publicly matches what you build privately. People have an uncanny, instinctive radar for incongruence. When someone's public persona is confident and visionary, but their actual deliverables are late, superficial, and disorganized, trust dissolves instantly.",
+      "True credibility is built in the unrecorded moments: the late-night debugging session where you fix an edge case nobody else noticed, the meticulous proofreading of a proposal, or the willingness to step up and handle backstage logistics during an event crisis when nobody is holding a camera.",
+      "When your internal standards for your own work exceed the expectations of your toughest critic, you develop an unshakeable quiet confidence. You no longer need to seek validation because the work speaks for itself."
+    ],
+    quote: "True credibility is built in the unrecorded moments: when your internal standards exceed the expectations of your toughest critic."
+  },
+  {
+    id: "writing",
+    date: "JUNE 18, 2026",
+    title: "Write Like a Person, Not a Pamphlet: The Antidote to Corporate AI Slop",
+    content: [
+      "The rise of generative AI has produced a deluge of synthetic writing that is grammatically flawless, syntactically balanced, and completely devoid of human soul. We are all familiar with the tropes: 'In today's fast-paced digital landscape, it is more important than ever to leverage synergies...'",
+      "When you feed generic prompts into an LLM, you get average prose by mathematical definition. To write something that genuinely resonates, you must inject real human friction: specific sensory details, unresolved contradictions, self-deprecating honesty, and rhythmic variance in sentence length.",
+      "This insight was the foundational thesis behind Heartfelt AI: software should not replace human voice; it should protect and amplify what makes a writer unique. When writing sounds like one human being speaking directly to another across a kitchen table, people stop scrolling and pay attention."
+    ],
+    quote: "Software should not replace human voice; it should protect and amplify what makes a writer uniquely human."
+  },
+  {
+    id: "skills-matrix",
+    date: "JUNE 01, 2026",
+    title: "Capabilities Architecture: 6-Category Skills Taxonomy & 13 Core Tools",
+    content: [
+      "Modern digital products require cross-disciplinary operators who understand consumer psychology, business strategy, and rapid technical execution.",
+      "Below is the complete architectural taxonomy of my capabilities across product management, market strategy, consumer psychology, growth experiments, operations, and technical tooling:"
+    ],
+    quote: "A distinctive synthesis of product thinking, business acumen, consumer psychology, and rapid execution.",
+    isSkillsMatrix: true
+  }
+];
+
+// Engineering projects matching dejiajetomobi.com /engineering
+const engineeringProjects = [
+  {
+    id: "eng-1",
+    title: "Digital Product Opportunity Research",
+    desc: "A research-led interactive database analyzing 50+ digital products, customer demand, and market gaps.",
+    url: "https://digital-product-opportunity-researc-omega.vercel.app",
+    tags: ["Research", "Vercel", "Market Strategy"],
+    highlights: "Explored 100+ customer problems, pricing structures, and AI leverage opportunities with live public reporting."
+  },
+  {
+    id: "eng-2",
+    title: "Heartfelt AI — Writing Assistant",
+    desc: "AI-assisted writing prototype designed to make communication feel human, authentic, and expressive.",
+    url: "https://heartfelt.ai-proto.site",
+    tags: ["AI Prototype", "Product Design", "NLP"],
+    highlights: "Two-stage prompt pipeline and local user voice profile preserving natural cadence, vulnerability, and rhythm."
+  },
+  {
+    id: "eng-3",
+    title: "Sales Copilot — Outreach Engine",
+    desc: "Context-aware prospect research and AI-assisted sales enablement specification for SDRs and founders.",
+    url: "https://salescopilot.preview.site",
+    tags: ["AI Product", "Sales Tech", "PRD"],
+    highlights: "End-to-end PRD, competitive benchmarking against Apollo and Clay, and automated bio synthesis prompts."
+  },
+  {
+    id: "eng-4",
+    title: "Project Sajag Aasman Portal",
+    desc: "Official digital presence for the youth-focused nonprofit life skills initiative (PSA).",
+    url: "https://projectsajagaasman.netlify.app/",
+    tags: ["Nonprofit", "Community", "Netlify"],
+    highlights: "Curriculum tracks, youth cohort registration workflows, and institutional partnership frameworks."
+  },
+  {
+    id: "eng-5",
+    title: "The Creative Club",
+    desc: "Community platform concept designed for showcasing, connecting, and discovering emerging creative talent.",
+    url: "https://thecreativeclub.app",
+    tags: ["Community", "Discovery", "Product Concept"],
+    highlights: "Custom portfolio curation flows, peer feedback exchange mechanics, and collaborative project rooms."
+  },
+  {
+    id: "eng-6",
+    title: "AI-assisted Product Building & Sandbox",
+    desc: "Continuous sandbox of prototypes, micro-apps, and full-stack experiments deployed with Vercel and GitHub.",
+    url: "https://github.com/sanskrutidhamal11",
+    tags: ["Prototyping", "GitHub", "Vercel"],
+    highlights: "Hands-on workflow combining modern generative AI tools and developer stacks for rapid product delivery."
+  }
+];
+
+// Work category filter definitions matching dejiajetomobi.com
+const filterDefs = [
+  { id: "All", label: "All", marker: null },
+  { id: "Product", label: "Product", marker: "P" },
+  { id: "Research", label: "Research", marker: "R" },
+  { id: "Strategy & Growth", label: "Strategy & Growth", marker: "S" },
+  { id: "Operations", label: "Operations", marker: "O" },
+  { id: "Writing & Brand", label: "Writing & Brand", marker: "W" },
+  { id: "Leadership", label: "Leadership", marker: "L" },
+  { id: "Education & Learning", label: "Education & Learning", marker: "E" },
+  { id: "Concepts & Archive", label: "Concepts & Archive", marker: "X" }
+];
+
+// App State
+let activePage = "about";
+let activeFilter = "All";
+let currentArticleIndex = 0;
+let activeEngineeringIndex = 0;
+
+// DOM Elements
+const navActiveContainer = document.getElementById("nav-active-container");
+const navBrandItems = document.querySelectorAll(".nav-brand-item[data-page]");
+const viewSections = {
+  about: document.getElementById("view-about"),
+  work: document.getElementById("view-work"),
+  articles: document.getElementById("view-articles"),
+  engineering: document.getElementById("view-engineering")
+};
+const workGrid = document.getElementById("work-grid");
+const workFilters = document.getElementById("work-filters");
+const workModal = document.getElementById("work-modal");
+const wmMedia = document.getElementById("wm-media");
+const wmInfoContent = document.getElementById("wm-info-content");
+const wmClose = document.getElementById("wm-close");
+const articleReader = document.getElementById("article-reader");
+const articleCounter = document.getElementById("article-counter");
+const prevArticleBtn = document.getElementById("prev-article");
+const nextArticleBtn = document.getElementById("next-article");
+const engineeringNav = document.getElementById("engineering-nav");
+const engineeringFrame = document.getElementById("engineering-frame");
+
+// =========================================================
+// NAVIGATION CONTROLLER
+// =========================================================
+function updateNavIndicator() {
+  const activeItem = document.querySelector(`.nav-brand-item[data-page="${activePage}"]`);
+  if (!activeItem || !navActiveContainer) return;
+
+  const itemRect = activeItem.getBoundingClientRect();
+  const scroller = activeItem.closest(".nav-scroller");
+  if (!scroller) return;
+  const scrollerRect = scroller.getBoundingClientRect();
+  const left = itemRect.left - scrollerRect.left;
+  const width = itemRect.width;
+
+  navActiveContainer.style.transform = `translate(${left}px, -50%)`;
+  navActiveContainer.style.width = `${width}px`;
+
+  navBrandItems.forEach(item => {
+    const isCurrent = item.dataset.page === activePage;
+    item.classList.toggle("nav-brand-item--active", isCurrent);
+    const link = item.querySelector(".nav-brand");
+    if (link) {
+      link.classList.toggle("nav-brand--active", isCurrent);
+      if (isCurrent) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    }
+  });
+}
+
+function navigateTo(page, pushState = true) {
+  if (!viewSections[page]) page = "about";
+  activePage = page;
+
+  // Update views
+  Object.keys(viewSections).forEach(key => {
+    const isTarget = key === page;
+    viewSections[key].classList.toggle("view-active", isTarget);
+    if (isTarget) {
+      viewSections[key].scrollTop = 0;
+    }
+  });
+
+  // Full-width nav wrapper for Work page
+  const headerNav = document.getElementById("main-nav");
+  if (headerNav) {
+    headerNav.classList.toggle("nav--full-width", page === "work");
+  }
+
+  // Update active pill position
+  setTimeout(updateNavIndicator, 20);
+
+  // Update URL history
+  if (pushState) {
+    const url = page === "about" ? "/" : `/${page}`;
+    history.pushState({ page }, "", url);
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Global click delegation for navigation links
+document.addEventListener("click", e => {
+  const navLink = e.target.closest("[data-page]");
+  if (navLink && !navLink.closest(".works-filter-nav")) {
+    const page = navLink.dataset.page;
+    if (page) {
+      e.preventDefault();
+      navigateTo(page);
+    }
+  }
+
+  const openWorkLink = e.target.closest("[data-open-work]");
+  if (openWorkLink) {
+    e.preventDefault();
+    const workId = openWorkLink.dataset.openWork;
+    const workItem = works.find(w => w.id === workId);
+    if (workItem) {
+      navigateTo("work");
+      setTimeout(() => openModal(workItem), 150);
+    }
+  }
+});
+
+window.addEventListener("popstate", e => {
+  if (e.state && e.state.page) {
+    navigateTo(e.state.page, false);
+  } else {
+    parseInitialRoute();
+  }
+});
+
+function parseInitialRoute() {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+  if (path === "work" || path === "design") {
+    navigateTo("work", false);
+  } else if (path === "articles") {
+    navigateTo("articles", false);
+  } else if (path === "engineering") {
+    navigateTo("engineering", false);
+  } else {
+    navigateTo("about", false);
+  }
+}
+
+// =========================================================
+// SCROLL-DRIVEN SECTION NAVIGATION & GESTURE SYSTEM
+// =========================================================
+const SECTIONS = ["about", "work", "articles", "engineering"];
+let isNavigating = false;
+let lastNavTime = 0;
+let wheelAccumulator = 0;
+let wheelResetTimer = null;
+let touchStartY = null;
+let touchStartX = null;
+
+function canNavigateToSection(direction) {
+  const currentIndex = SECTIONS.indexOf(activePage);
+  if (currentIndex === -1) return null;
+  const targetIndex = currentIndex + direction;
+  if (targetIndex < 0 || targetIndex >= SECTIONS.length) return null;
+  return SECTIONS[targetIndex];
+}
+
+function handleSectionTransition(direction) {
+  const target = canNavigateToSection(direction);
+  if (!target) return;
+
+  isNavigating = true;
+  lastNavTime = performance.now();
+  wheelAccumulator = 0;
+
+  navigateTo(target);
+
+  setTimeout(() => {
+    isNavigating = false;
+  }, 650);
+}
+
+// Wheel listener (passive: false to prevent default on homepage)
+window.addEventListener("wheel", (e) => {
+  // If modal is open, do not intercept
+  if (workModal && workModal.classList.contains("is-open")) return;
+
+  const now = performance.now();
+  if (isNavigating || now - lastNavTime < 650) {
+    if (activePage === "about") e.preventDefault();
+    return;
+  }
+
+  const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+  if (Math.abs(delta) < 20) return;
+
+  // On homepage (about): fixed single-screen composition
+  if (activePage === "about") {
+    e.preventDefault();
+    wheelAccumulator += delta;
+    clearTimeout(wheelResetTimer);
+    wheelResetTimer = setTimeout(() => { wheelAccumulator = 0; }, 150);
+
+    if (wheelAccumulator > 30) {
+      handleSectionTransition(1); // Downward scroll advances to Work
+    }
+    return;
+  }
+
+  // On scrollable pages (work, articles, engineering)
+  const currentView = viewSections[activePage];
+  if (!currentView) return;
+
+  const atTop = currentView.scrollTop <= 5;
+  const atBottom = currentView.scrollTop + currentView.clientHeight >= currentView.scrollHeight - 10;
+
+  if (delta < -35 && atTop) {
+    // Scrolling up at the very top returns to previous section
+    e.preventDefault();
+    handleSectionTransition(-1);
+  } else if (delta > 35 && atBottom) {
+    // Scrolling down at the very bottom advances to next section
+    e.preventDefault();
+    handleSectionTransition(1);
+  }
+}, { passive: false });
+
+// Touch swipe gestures
+window.addEventListener("touchstart", (e) => {
+  if (workModal && workModal.classList.contains("is-open")) return;
+  if (e.touches && e.touches.length === 1) {
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+  }
+}, { passive: true });
+
+window.addEventListener("touchend", (e) => {
+  if (touchStartY === null || (workModal && workModal.classList.contains("is-open"))) return;
+  const now = performance.now();
+  if (isNavigating || now - lastNavTime < 650) {
+    touchStartY = null;
+    return;
+  }
+
+  const touchEndY = e.changedTouches?.[0]?.clientY ?? touchStartY;
+  const touchEndX = e.changedTouches?.[0]?.clientX ?? touchStartX;
+  const diffY = touchStartY - touchEndY;
+  const diffX = touchStartX - touchEndX;
+
+  touchStartY = null;
+  touchStartX = null;
+
+  // Only trigger if vertical swipe dominates and exceeds threshold
+  if (Math.abs(diffY) > 55 && Math.abs(diffY) > Math.abs(diffX) * 1.5) {
+    if (activePage === "about") {
+      if (diffY > 0) {
+        // Swiped UP on homepage -> advance to work
+        handleSectionTransition(1);
+      }
+    } else {
+      const currentView = viewSections[activePage];
+      if (currentView) {
+        const atTop = currentView.scrollTop <= 5;
+        const atBottom = currentView.scrollTop + currentView.clientHeight >= currentView.scrollHeight - 10;
+        if (diffY < 0 && atTop) {
+          // Swiped DOWN at top -> return to previous section
+          handleSectionTransition(-1);
+        } else if (diffY > 0 && atBottom) {
+          // Swiped UP at bottom -> advance to next section
+          handleSectionTransition(1);
+        }
+      }
+    }
+  }
+}, { passive: true });
+
+// Keyboard navigation
+window.addEventListener("keydown", (e) => {
+  if (workModal && workModal.classList.contains("is-open")) return;
+  const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+  if (activeTag === "input" || activeTag === "textarea" || activeTag === "select") return;
+
+  if (e.key === "ArrowDown" || e.key === "PageDown") {
+    if (activePage === "about") {
+      e.preventDefault();
+      handleSectionTransition(1);
+    }
+  } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+    const currentView = viewSections[activePage];
+    if (activePage !== "about" && currentView && currentView.scrollTop <= 5) {
+      e.preventDefault();
+      handleSectionTransition(-1);
+    }
+  }
+});
+
+// =========================================================
+// WORK GALLERY & FILTER SYSTEM
+// =========================================================
+function initWorkFilters() {
+  if (!workFilters) return;
+  workFilters.innerHTML = filterDefs.map(f => {
+    const isActive = f.id === activeFilter;
+    const markerHtml = f.marker ? `<div class="nav-item-marker" aria-hidden="true">${f.marker}</div>` : '';
+    return `
+      <div class="nav-brand-item ${isActive ? 'nav-brand-item--active' : ''}" data-filter="${f.id}">
+        ${markerHtml}
+        <button class="nav-brand ${isActive ? 'nav-brand--active' : ''}" type="button" aria-pressed="${isActive}">
+          <span>${f.label}</span>
+        </button>
+      </div>
+    `;
+  }).join("");
+
+  workFilters.querySelectorAll("[data-filter]").forEach(item => {
+    item.addEventListener("click", () => {
+      activeFilter = item.dataset.filter;
+      initWorkFilters();
+      renderWorkGrid();
+    });
+  });
+}
+
+function renderWorkGrid() {
+  if (!workGrid) return;
+  const filtered = activeFilter === "All" 
+    ? works 
+    : works.filter(w => w.cat === activeFilter);
+
+  workGrid.innerHTML = filtered.map(w => `
+    <article class="work-grid-card" data-id="${w.id}" style="background-color: ${w.bg};">
+      <div class="card-header">
+        <span class="card-marker" title="${w.cat}">${w.marker}</span>
+        <span class="card-num">${w.id}</span>
+      </div>
+      <div class="card-canvas">
+        <div>
+          <div class="card-org">${w.org}</div>
+          <h3 class="card-title">${w.title}</h3>
+          <p class="card-summary">${w.summary}</p>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags">
+            ${w.tags.slice(0, 3).map(t => `<span class="card-tag">${t}</span>`).join("")}
+          </div>
+          <span class="card-date">${w.date}</span>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  workGrid.querySelectorAll(".work-grid-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const w = works.find(item => item.id === card.dataset.id);
+      if (w) openModal(w);
+    });
+  });
+}
+
+// =========================================================
+// WORK MODAL (2-Column Showcase)
+// =========================================================
+function openModal(w) {
+  if (!workModal) return;
+
+  const statusHtml = w.status ? `<div class="wm-status-pill">${w.status}</div>` : '';
+
+  // Populate Left Media Pane
+  wmMedia.innerHTML = `
+    <div class="wm-showcase">
+      ${statusHtml}
+      <span class="wm-showcase-badge">${w.cat} · ${w.date}</span>
+      <h2 class="wm-showcase-title">${w.title}</h2>
+      <p style="color: #666; font-size: 15px; line-height: 1.55; margin-bottom: 24px;">${w.summary}</p>
+      
+      <div class="wm-showcase-statgrid">
+        <div class="wm-stat-item">
+          <b>${w.org.split("·")[0].trim()}</b>
+          <span>Organization</span>
+        </div>
+        <div class="wm-stat-item">
+          <b>${w.date}</b>
+          <span>Timeline</span>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid rgba(0,0,0,0.06); padding-top: 20px;">
+        <span class="wm-section-label">KEY DELIVERABLES & FOCUS AREAS</span>
+        <ul style="padding-left: 20px; font-size: 14px; line-height: 1.6; color: #333; margin-top: 8px;">
+          ${w.items.slice(0, 5).map(i => `<li>${i}</li>`).join("")}
+        </ul>
+      </div>
+    </div>
+  `;
+
+  // Populate Right Info Pane
+  wmInfoContent.innerHTML = `
+    <div class="wm-info-header">
+      <h2 class="wm-info-title">${w.title}</h2>
+      <div class="wm-info-year">${w.org} · ${w.date}</div>
+      <div class="wm-info-categories">
+        ${w.tags.map(t => `<span class="wm-info-category">${t}</span>`).join("")}
+      </div>
+    </div>
+
+    <div style="border-top: 1px solid var(--border-light); padding-top: 20px; display: flex; flex-direction: column; gap: 20px;">
+      <div>
+        <h4 class="wm-section-label">ROLE CONTEXT & ARCHITECTURE</h4>
+        <p class="wm-info-body">${w.body}</p>
+      </div>
+
+      <div>
+        <h4 class="wm-section-label">WHAT I WORKED ON & DELIVERABLES</h4>
+        <ul class="wm-info-list">
+          ${w.items.map(i => `<li>${i}</li>`).join("")}
+        </ul>
+      </div>
+
+      ${w.proof ? `
+        <div>
+          <h4 class="wm-section-label">RECOGNITION, METRICS & PROOF</h4>
+          <div class="wm-proof-box">${w.proof}</div>
+        </div>
+      ` : ""}
+
+      ${w.link ? `
+        <div>
+          <a class="wm-link" href="${w.link}" target="_blank" rel="noopener noreferrer">
+            View live project / repository ↗
+          </a>
+        </div>
+      ` : ""}
+    </div>
+  `;
+
+  workModal.classList.add("is-open");
+  workModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  if (!workModal) return;
+  workModal.classList.remove("is-open");
+  workModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+if (wmClose) wmClose.addEventListener("click", closeModal);
+workModal.addEventListener("click", e => {
+  if (e.target === workModal) closeModal();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
+});
+
+// =========================================================
+// ARTICLES (Carousel & Reader)
+// =========================================================
+function renderArticle() {
+  if (!articleReader) return;
+  const art = articles[currentArticleIndex];
+
+  let extraHtml = "";
+  if (art.isSkillsMatrix) {
+    extraHtml = `
+      <div class="article-skills-tree">
+        <div class="skills-tree-col">
+          <h3 class="skills-tree-title">
+            <span>1. Product &amp; Research</span>
+            <span class="skills-count-badge">16 skills</span>
+          </h3>
+          <ul class="skills-tree-list">
+            <li>• Product Strategy &amp; Roadmapping</li>
+            <li>• Feature Prioritization (RICE / MoSCoW)</li>
+            <li>• Customer Problem Discovery</li>
+            <li>• Competitive Benchmarking</li>
+            <li>• User Onboarding &amp; Retention Loops</li>
+            <li>• Product Positioning &amp; Communication</li>
+            <li>• User Persona Definition &amp; Journey Mapping</li>
+            <li>• User Research &amp; Customer Interviews</li>
+            <li>• Hypothesis Formulation &amp; Testing</li>
+            <li>• PRD Writing &amp; Specification</li>
+            <li>• MVP Scoping &amp; Guardrail Setting</li>
+            <li>• Friction Point Auditing</li>
+            <li>• Digital Product Opportunity Research</li>
+            <li>• Pricing Model Evaluation</li>
+            <li>• Value Proposition Architecture</li>
+            <li>• Opportunity Scoring Matrix</li>
+          </ul>
+        </div>
+
+        <div class="skills-tree-col">
+          <h3 class="skills-tree-title">
+            <span>2. Strategy &amp; Business</span>
+            <span class="skills-count-badge">17 skills</span>
+          </h3>
+          <ul class="skills-tree-list">
+            <li>• Market Analysis &amp; Industry Mapping</li>
+            <li>• Business Model Evaluation</li>
+            <li>• Strategic Positioning &amp; Differentiation</li>
+            <li>• Go-To-Market (GTM) Planning</li>
+            <li>• Opportunity Scoring Frameworks</li>
+            <li>• Unit Economics Awareness</li>
+            <li>• Pricing Strategy &amp; Market Tiering</li>
+            <li>• Revenue Channel Scoping</li>
+            <li>• Competitive Intelligence</li>
+            <li>• Business Development Strategy</li>
+            <li>• Strategic Partnerships &amp; Alliances</li>
+            <li>• Stakeholder Management</li>
+            <li>• Pitch Deck Architecture &amp; Storylining</li>
+            <li>• Commercial Proposal Structuring</li>
+            <li>• Negotiation Fundamentals</li>
+            <li>• High-Value Commercial Outreach</li>
+            <li>• Chapter Expansion Playbooks</li>
+          </ul>
+        </div>
+
+        <div class="skills-tree-col">
+          <h3 class="skills-tree-title">
+            <span>3. Consumer Psychology &amp; Communication</span>
+            <span class="skills-count-badge">16 skills</span>
+          </h3>
+          <ul class="skills-tree-list">
+            <li>• Buying Behavior &amp; Decision Triggers</li>
+            <li>• Trust &amp; Credibility Signaling</li>
+            <li>• Cognitive Load &amp; Friction Reduction</li>
+            <li>• Audience Segmentation &amp; Empathy Mapping</li>
+            <li>• Value Perception Engineering</li>
+            <li>• Public Speaking &amp; Stage Delivery</li>
+            <li>• Competitive Debate &amp; Persuasive Oratory</li>
+            <li>• Executive &amp; Boardroom Communication</li>
+            <li>• Narrative Framing &amp; Storytelling</li>
+            <li>• Copywriting &amp; Hook Architecture</li>
+            <li>• Short-Form Video Scripting &amp; Pacing</li>
+            <li>• Audience Discovery Loops</li>
+            <li>• Personal Brand Positioning</li>
+            <li>• Public Writing &amp; Distribution Strategy</li>
+            <li>• Crisis Communication Under Pressure</li>
+            <li>• Non-Follower Algorithmic Reach Optimization</li>
+          </ul>
+        </div>
+
+        <div class="skills-tree-col">
+          <h3 class="skills-tree-title">
+            <span>4. Growth &amp; Marketing</span>
+            <span class="skills-count-badge">13 skills</span>
+          </h3>
+          <ul class="skills-tree-list">
+            <li>• Growth Experimentation &amp; Hypothesis Testing</li>
+            <li>• High-Velocity A/B Testing</li>
+            <li>• Organic Content Distribution</li>
+            <li>• LinkedIn Audience Building (0 to 12K+)</li>
+            <li>• Viral Content Formatting (Wavy Stories)</li>
+            <li>• Short-Form Video Strategy (Reels / Shorts)</li>
+            <li>• Micro-Influencer &amp; Creator Coordination</li>
+            <li>• Campus Ambassador Program Architecture</li>
+            <li>• Community-Led Growth</li>
+            <li>• Funnel Optimization &amp; Friction Removal</li>
+            <li>• Conversion Rate Optimization (CRO)</li>
+            <li>• Social Proof &amp; Testimonial Placement</li>
+            <li>• In-App Gamification &amp; Streak Systems</li>
+          </ul>
+        </div>
+
+        <div class="skills-tree-col">
+          <h3 class="skills-tree-title">
+            <span>5. Operations &amp; Leadership</span>
+            <span class="skills-count-badge">9 skills</span>
+          </h3>
+          <ul class="skills-tree-list">
+            <li>• Program &amp; Project Management</li>
+            <li>• Cross-Functional Team Coordination</li>
+            <li>• Standard Operating Procedures (SOPs)</li>
+            <li>• Large-Scale Event Operations &amp; Stage Production</li>
+            <li>• Corporate Sponsor &amp; Vendor Liaison</li>
+            <li>• Process Documentation &amp; Workflow Optimization</li>
+            <li>• Team Accountability &amp; Deliverable Cadence</li>
+            <li>• Crisis Management Under Tight Deadlines</li>
+            <li>• Founder’s Office Operational Execution</li>
+          </ul>
+        </div>
+
+        <div class="skills-tree-col">
+          <h3 class="skills-tree-title">
+            <span>6. AI &amp; Technical Capabilities</span>
+            <span class="skills-count-badge">9 skills</span>
+          </h3>
+          <ul class="skills-tree-list">
+            <li>• AI-Assisted Product Building &amp; Vibe Coding</li>
+            <li>• Prompt Engineering &amp; Chain-of-Thought Tuning</li>
+            <li>• LLM Workflow Architecture &amp; Prompt Chaining</li>
+            <li>• Generative AI Application Prototyping</li>
+            <li>• ATS Optimization &amp; NLP Parsing Engines</li>
+            <li>• Data Analysis &amp; Empirical Pattern Recognition</li>
+            <li>• Modern Web Deployment (Vercel)</li>
+            <li>• Version Control &amp; Git Collaboration (GitHub)</li>
+            <li>• Rapid UI/UX Canvas Prototyping</li>
+          </ul>
+        </div>
+
+        <div class="skills-tree-col skills-tree-col--tools">
+          <h3 class="skills-tree-title">
+            <span>Core Tooling &amp; Technical Stack</span>
+            <span class="skills-count-badge">13 essential tools</span>
+          </h3>
+          <div class="tools-pills-wrap">
+            <span class="tool-chip"><strong>Canva</strong> · Visual Design</span>
+            <span class="tool-chip"><strong>Figma</strong> · UI/UX Wireframing</span>
+            <span class="tool-chip"><strong>CapCut</strong> · Video Production</span>
+            <span class="tool-chip"><strong>Notion</strong> · Knowledge Bases &amp; SOPs</span>
+            <span class="tool-chip"><strong>Jira</strong> · Agile Sprint Tracking</span>
+            <span class="tool-chip"><strong>Whimsical</strong> · Flowcharts &amp; Wireflows</span>
+            <span class="tool-chip"><strong>Google Workspace</strong> · Docs, Sheets &amp; Slides</span>
+            <span class="tool-chip"><strong>Google Analytics</strong> · Traffic &amp; Funnel Metrics</span>
+            <span class="tool-chip"><strong>GitHub</strong> · Version Control &amp; Open Source</span>
+            <span class="tool-chip"><strong>Vercel</strong> · Static &amp; Serverless Deployment</span>
+            <span class="tool-chip"><strong>Google AI Studio</strong> · Prototyping &amp; Gemini Workflows</span>
+            <span class="tool-chip"><strong>Python</strong> · Scripting &amp; Data Analysis</span>
+            <span class="tool-chip"><strong>SQL</strong> · Relational Queries &amp; Data Filtering</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  articleReader.innerHTML = `
+    <header class="article-header">
+      <p class="article-date">${art.date}</p>
+      <h1 class="article-title">${art.title}</h1>
+    </header>
+    <div class="articles-content">
+      ${art.content.map(p => `<p class="article-rich-paragraph">${p}</p>`).join("")}
+      ${art.quote ? `<blockquote class="article-rich-quote">${art.quote}</blockquote>` : ""}
+      ${extraHtml}
+    </div>
+  `;
+
+  if (articleCounter) {
+    const currentNum = currentArticleIndex + 1 < 10 ? `0${currentArticleIndex + 1}` : `${currentArticleIndex + 1}`;
+    const totalNum = articles.length < 10 ? `0${articles.length}` : `${articles.length}`;
+    articleCounter.textContent = `${currentNum} / ${totalNum}`;
+  }
+
+  if (prevArticleBtn) prevArticleBtn.disabled = currentArticleIndex === 0;
+  if (nextArticleBtn) nextArticleBtn.disabled = currentArticleIndex === articles.length - 1;
+}
+
+if (prevArticleBtn) {
+  prevArticleBtn.addEventListener("click", () => {
+    if (currentArticleIndex > 0) {
+      currentArticleIndex--;
+      renderArticle();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+}
+
+if (nextArticleBtn) {
+  nextArticleBtn.addEventListener("click", () => {
+    if (currentArticleIndex < articles.length - 1) {
+      currentArticleIndex++;
+      renderArticle();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+}
+
+// =========================================================
+// & ENGINEERING (Split Screen Controller)
+// =========================================================
+function initEngineering() {
+  if (!engineeringNav || !engineeringFrame) return;
+
+  engineeringNav.innerHTML = engineeringProjects.map((p, idx) => `
+    <div class="engineering-sidenav-item ${idx === activeEngineeringIndex ? 'is-active' : ''}" data-eng-idx="${idx}">
+      <span class="engineering-sidenav-title">
+        <h3>${p.title}</h3>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M4 10L10 4M10 4H5M10 4V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <p>${p.desc}</p>
+    </div>
+  `).join("");
+
+  renderEngineeringFrame();
+
+  engineeringNav.querySelectorAll("[data-eng-idx]").forEach(item => {
+    item.addEventListener("click", () => {
+      activeEngineeringIndex = parseInt(item.dataset.engIdx, 10);
+      initEngineering();
+    });
+  });
+}
+
+function renderEngineeringFrame() {
+  if (!engineeringFrame) return;
+  const project = engineeringProjects[activeEngineeringIndex];
+
+  engineeringFrame.innerHTML = `
+    <div class="engineering-demo-card">
+      <div class="demo-card-browserbar">
+        <div class="browser-dots">
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+        </div>
+        <div class="browser-url">${project.url}</div>
+      </div>
+      <div class="demo-card-content">
+        <span class="demo-project-badge">ACTIVE EXPERIMENT</span>
+        <h2 class="demo-project-title">${project.title}</h2>
+        <p class="demo-project-desc">${project.desc}</p>
+        <p style="font-size: 14.5px; line-height: 1.6; color: #555; margin-bottom: 24px;">${project.highlights}</p>
+        <div class="demo-tags">
+          ${project.tags.map(t => `<span class="demo-tag">${t}</span>`).join("")}
+        </div>
+        <div>
+          <a class="demo-action-btn" href="${project.url}" target="_blank" rel="noopener noreferrer">
+            Open Project ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// =========================================================
+// INITIALIZATION
+// =========================================================
+window.addEventListener("DOMContentLoaded", () => {
+  initWorkFilters();
+  renderWorkGrid();
+  renderArticle();
+  initEngineering();
+  parseInitialRoute();
+  window.addEventListener("resize", updateNavIndicator);
+});
