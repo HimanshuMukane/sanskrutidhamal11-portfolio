@@ -790,15 +790,25 @@ const wmModalId = document.getElementById("wm-modal-id");
 const wmClose = document.getElementById("wm-close");
 const wmNarrative = document.getElementById("wm-narrative");
 const wmArtefactPane = document.getElementById("wm-artefact-pane");
-const articleReader = document.getElementById("article-reader");
 const articleCounter = document.getElementById("article-counter");
 const prevArticleBtn = document.getElementById("prev-article");
 const nextArticleBtn = document.getElementById("next-article");
 const engineeringNav = document.getElementById("engineering-nav");
 const engineeringFrame = document.getElementById("engineering-frame");
 
+// Interactive Articles Carousel & Fullscreen Elements
+const articlesStageContainer = document.getElementById("articles-stage-container");
+const articlesCarouselTrack = document.getElementById("articles-carousel-track");
+const articleFullscreenReader = document.getElementById("article-fullscreen-reader");
+const articleFullscreenContent = document.getElementById("article-fullscreen-content");
+const articleReaderClose = document.getElementById("article-reader-close");
+const articleReaderScrollable = document.getElementById("article-reader-scrollable");
+
+// Work Filters Active Indicator Element
+const workFiltersActiveContainer = document.getElementById("work-filters-active-container");
+
 // =========================================================
-// NAVIGATION CONTROLLER
+// NAVIGATION CONTROLLER & CENTER-LOCK
 // =========================================================
 function updateNavIndicator() {
   const activeItem = document.querySelector(`.nav-brand-item[data-page="${activePage}"]`);
@@ -806,18 +816,17 @@ function updateNavIndicator() {
   const navViewport = document.querySelector(".nav-viewport");
   if (!activeItem || !navActiveContainer || !navContent) return;
 
-  // Position the highlight pill over the active item relative to .nav-content
+  // Position highlight pill over active item
   const itemLeft = activeItem.offsetLeft;
   const itemWidth = activeItem.offsetWidth;
 
   navActiveContainer.style.transform = `translate(${itemLeft}px, -50%)`;
   navActiveContainer.style.width = `${itemWidth}px`;
 
-  // Align active item horizontally with the central marker of .nav-viewport
+  // Align active item precisely at center of nav-viewport (under ruler indicator line)
   if (navViewport) {
     const viewportWidth = navViewport.offsetWidth;
     const itemCenterInContent = itemLeft + itemWidth / 2;
-    // Offset required so that active item center precisely aligns with nav-viewport center (50% marker)
     const targetOffset = (viewportWidth / 2) - itemCenterInContent;
     navContent.style.transform = `translateX(${targetOffset}px)`;
   }
@@ -837,6 +846,196 @@ function updateNavIndicator() {
   });
 }
 
+function updateWorkFiltersIndicator() {
+  const activeFilterItem = document.querySelector(`.nav-brand-item[data-filter="${activeFilter}"]`);
+  const workFiltersNav = document.getElementById("work-filters");
+  const workNavViewport = workFiltersNav ? workFiltersNav.closest(".nav-viewport") : null;
+  const filterIndicator = document.getElementById("work-filters-active-container");
+
+  if (!activeFilterItem || !workFiltersNav || !workNavViewport) return;
+
+  const itemLeft = activeFilterItem.offsetLeft;
+  const itemWidth = activeFilterItem.offsetWidth;
+
+  if (filterIndicator) {
+    filterIndicator.style.transform = `translate(${itemLeft}px, -50%)`;
+    filterIndicator.style.width = `${itemWidth}px`;
+  }
+
+  // Align active subcategory at center
+  const viewportWidth = workNavViewport.offsetWidth;
+  const itemCenter = itemLeft + itemWidth / 2;
+  const targetOffset = (viewportWidth / 2) - itemCenter;
+  workFiltersNav.style.transform = `translateX(${targetOffset}px)`;
+}
+
+// Drag / Swipe system for ruler navigation
+function makeRulerDraggable(wrapperElement, getItems, onSelectIndex, getCurrentIndex) {
+  if (!wrapperElement) return;
+
+  let isDown = false;
+  let startX = 0;
+  let currentTranslateX = 0;
+  let hasDragged = false;
+
+  const getTargetNavContent = () => wrapperElement.querySelector(".nav-content");
+
+  wrapperElement.addEventListener("mousedown", (e) => {
+    // Only left click
+    if (e.button !== 0) return;
+    const navContent = getTargetNavContent();
+    if (!navContent) return;
+
+    isDown = true;
+    hasDragged = false;
+    startX = e.pageX;
+    
+    // Parse current transform
+    const style = window.getComputedStyle(navContent);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    currentTranslateX = matrix.m41;
+    wrapperElement.style.cursor = "grabbing";
+    navContent.style.transition = "none";
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    const navContent = getTargetNavContent();
+    if (!navContent) return;
+
+    const diff = e.pageX - startX;
+    if (Math.abs(diff) > 4) {
+      hasDragged = true;
+    }
+    navContent.style.transform = `translateX(${currentTranslateX + diff}px)`;
+  });
+
+  window.addEventListener("mouseup", (e) => {
+    if (!isDown) return;
+    isDown = false;
+    wrapperElement.style.cursor = "grab";
+    const navContent = getTargetNavContent();
+    if (!navContent) return;
+
+    navContent.style.transition = "transform 0.38s cubic-bezier(0.22, 0.61, 0.36, 1)";
+
+    if (hasDragged) {
+      // Find nearest item to center
+      const viewport = wrapperElement.querySelector(".nav-viewport");
+      const viewportCenter = viewport ? viewport.getBoundingClientRect().left + viewport.offsetWidth / 2 : window.innerWidth / 2;
+      const items = getItems();
+      
+      let closestIdx = getCurrentIndex();
+      let minDistance = Infinity;
+
+      items.forEach((item, idx) => {
+        const rect = item.getBoundingClientRect();
+        const itemCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(itemCenter - viewportCenter);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
+        }
+      });
+
+      onSelectIndex(closestIdx);
+    }
+  });
+
+  // Touch drag support
+  let touchStartXCoord = 0;
+  let touchStartTranslateX = 0;
+  let touchHasDragged = false;
+
+  wrapperElement.addEventListener("touchstart", (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    const navContent = getTargetNavContent();
+    if (!navContent) return;
+
+    touchStartXCoord = e.touches[0].clientX;
+    touchHasDragged = false;
+    const style = window.getComputedStyle(navContent);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    touchStartTranslateX = matrix.m41;
+    navContent.style.transition = "none";
+  }, { passive: true });
+
+  wrapperElement.addEventListener("touchmove", (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    const navContent = getTargetNavContent();
+    if (!navContent) return;
+
+    const diff = e.touches[0].clientX - touchStartXCoord;
+    if (Math.abs(diff) > 4) {
+      touchHasDragged = true;
+    }
+    navContent.style.transform = `translateX(${touchStartTranslateX + diff}px)`;
+  }, { passive: true });
+
+  wrapperElement.addEventListener("touchend", () => {
+    const navContent = getTargetNavContent();
+    if (!navContent) return;
+
+    navContent.style.transition = "transform 0.38s cubic-bezier(0.22, 0.61, 0.36, 1)";
+    if (touchHasDragged) {
+      const viewport = wrapperElement.querySelector(".nav-viewport");
+      const viewportCenter = viewport ? viewport.getBoundingClientRect().left + viewport.offsetWidth / 2 : window.innerWidth / 2;
+      const items = getItems();
+
+      let closestIdx = getCurrentIndex();
+      let minDistance = Infinity;
+
+      items.forEach((item, idx) => {
+        const rect = item.getBoundingClientRect();
+        const itemCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(itemCenter - viewportCenter);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
+        }
+      });
+
+      onSelectIndex(closestIdx);
+    }
+  }, { passive: true });
+}
+
+function initNavDraggers() {
+  const primaryNavWrapper = document.querySelector("#main-nav .nav-wrapper");
+  if (primaryNavWrapper) {
+    makeRulerDraggable(
+      primaryNavWrapper,
+      () => Array.from(document.querySelectorAll("#main-nav .nav-brand-item[data-page]")),
+      (idx) => {
+        const pageNames = ["about", "work", "articles", "engineering"];
+        if (pageNames[idx]) {
+          navigateTo(pageNames[idx]);
+        }
+      },
+      () => {
+        const pageNames = ["about", "work", "articles", "engineering"];
+        return pageNames.indexOf(activePage);
+      }
+    );
+  }
+
+  const workFiltersWrapper = document.querySelector(".works-filter-nav .nav-wrapper");
+  if (workFiltersWrapper) {
+    makeRulerDraggable(
+      workFiltersWrapper,
+      () => Array.from(document.querySelectorAll("#work-filters .nav-brand-item[data-filter]")),
+      (idx) => {
+        if (filterDefs[idx]) {
+          activeFilter = filterDefs[idx].id;
+          initWorkFilters();
+          renderWorkSection();
+        }
+      },
+      () => filterDefs.findIndex(f => f.id === activeFilter)
+    );
+  }
+}
+
 function navigateTo(page, pushState = true) {
   if (!viewSections[page]) page = "about";
   activePage = page;
@@ -854,6 +1053,11 @@ function navigateTo(page, pushState = true) {
 
   // Update active pill position
   setTimeout(updateNavIndicator, 20);
+  if (page === "work") {
+    setTimeout(updateWorkFiltersIndicator, 20);
+  } else if (page === "articles") {
+    setTimeout(updateArticlesCarousel, 20);
+  }
 
   // Update URL history
   if (pushState) {
@@ -1396,18 +1600,23 @@ function renderArtefact(w, isModal = false) {
 // =========================================================
 function initWorkFilters() {
   if (!workFilters) return;
-  workFilters.innerHTML = filterDefs.map(f => {
-    const isActive = f.id === activeFilter;
-    const markerHtml = f.marker ? `<div class="nav-item-marker" aria-hidden="true">${f.marker}</div>` : '';
-    return `
-      <div class="nav-brand-item ${isActive ? 'nav-brand-item--active' : ''}" data-filter="${f.id}">
-        ${markerHtml}
-        <button class="nav-brand ${isActive ? 'nav-brand--active' : ''}" type="button" aria-pressed="${isActive}">
-          <span>${f.label}</span>
-        </button>
-      </div>
-    `;
-  }).join("");
+  workFilters.innerHTML = `
+    <div class="active-container" id="work-filters-active-container" aria-hidden="true"></div>
+    ${filterDefs.map(f => {
+      const isActive = f.id === activeFilter;
+      const markerHtml = f.marker ? `<div class="nav-item-marker" aria-hidden="true">${f.marker}</div>` : '';
+      return `
+        <div class="nav-brand-item ${isActive ? 'nav-brand-item--active' : ''}" data-filter="${f.id}">
+          ${markerHtml}
+          <button class="nav-brand ${isActive ? 'nav-brand--active' : ''}" type="button" aria-pressed="${isActive}">
+            <span>${f.label}</span>
+          </button>
+        </div>
+      `;
+    }).join("")}
+  `;
+
+  setTimeout(updateWorkFiltersIndicator, 20);
 
   workFilters.querySelectorAll("[data-filter]").forEach(item => {
     item.addEventListener("click", () => {
@@ -1715,12 +1924,14 @@ document.addEventListener("keydown", e => {
 });
 
 // =========================================================
-// ARTICLES (Carousel & Reader)
+// ARTICLES (Multi-Card Carousel & Fullscreen Scroll Reader)
 // =========================================================
-function renderArticle() {
-  if (!articleReader) return;
-  const art = articles[currentArticleIndex];
+let isArticleDragging = false;
+let articleDragStartX = 0;
+let articleDragCurrentX = 0;
+let articleDragHasMoved = false;
 
+function buildArticleBodyHtml(art) {
   let extraHtml = "";
   if (art.isSkillsMatrix) {
     extraHtml = `
@@ -1884,7 +2095,7 @@ function renderArticle() {
     `;
   }
 
-  articleReader.innerHTML = `
+  return `
     <header class="article-header">
       <p class="article-date">${art.date}</p>
       <h1 class="article-title">${art.title}</h1>
@@ -1895,6 +2106,64 @@ function renderArticle() {
       ${extraHtml}
     </div>
   `;
+}
+
+function renderArticle() {
+  if (!articlesCarouselTrack) return;
+
+  // Render carousel cards if empty
+  if (articlesCarouselTrack.children.length !== articles.length) {
+    articlesCarouselTrack.innerHTML = articles.map((art, idx) => `
+      <div class="article-carousel-card ${idx === currentArticleIndex ? 'is-active' : ''}" data-article-idx="${idx}">
+        <div class="article-card-inner">
+          <header class="article-header">
+            <p class="article-date">${art.date}</p>
+            <h2 class="article-title">${art.title}</h2>
+          </header>
+          <div class="articles-content">
+            <p class="article-rich-paragraph">${art.content[0] || ""}</p>
+            ${art.content[1] ? `<p class="article-rich-paragraph">${art.content[1]}</p>` : ""}
+          </div>
+          <div class="article-card-fadeout">
+            <span class="article-card-read-hint">Click / Scroll to read full article &rarr;</span>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    // Click handler to open fullscreen or make active
+    articlesCarouselTrack.querySelectorAll("[data-article-idx]").forEach(card => {
+      card.addEventListener("click", () => {
+        const idx = parseInt(card.dataset.articleIdx, 10);
+        if (idx === currentArticleIndex) {
+          openArticleFullscreen(idx);
+        } else {
+          currentArticleIndex = idx;
+          updateArticlesCarousel();
+        }
+      });
+    });
+  }
+
+  updateArticlesCarousel();
+}
+
+function updateArticlesCarousel() {
+  if (!articlesCarouselTrack) return;
+
+  const cards = Array.from(articlesCarouselTrack.querySelectorAll(".article-carousel-card"));
+  cards.forEach((card, idx) => {
+    card.classList.toggle("is-active", idx === currentArticleIndex);
+  });
+
+  const activeCard = cards[currentArticleIndex];
+  if (activeCard && articlesStageContainer) {
+    const stageWidth = articlesStageContainer.offsetWidth;
+    const cardLeft = activeCard.offsetLeft;
+    const cardWidth = activeCard.offsetWidth;
+    const targetX = (stageWidth / 2) - (cardLeft + cardWidth / 2);
+    articlesCarouselTrack.style.transform = `translateX(${targetX}px)`;
+  }
 
   if (articleCounter) {
     const currentNum = currentArticleIndex + 1 < 10 ? `0${currentArticleIndex + 1}` : `${currentArticleIndex + 1}`;
@@ -1906,12 +2175,41 @@ function renderArticle() {
   if (nextArticleBtn) nextArticleBtn.disabled = currentArticleIndex === articles.length - 1;
 }
 
+function openArticleFullscreen(idx) {
+  currentArticleIndex = idx;
+  const art = articles[idx];
+  if (!art || !articleFullscreenReader || !articleFullscreenContent) return;
+
+  articleFullscreenContent.innerHTML = buildArticleBodyHtml(art);
+  articleFullscreenReader.classList.add("is-open");
+  articleFullscreenReader.setAttribute("aria-hidden", "false");
+  if (articleReaderScrollable) articleReaderScrollable.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+
+function closeArticleFullscreen() {
+  if (!articleFullscreenReader) return;
+  articleFullscreenReader.classList.remove("is-open");
+  articleFullscreenReader.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+if (articleReaderClose) {
+  articleReaderClose.addEventListener("click", closeArticleFullscreen);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && articleFullscreenReader && articleFullscreenReader.classList.contains("is-open")) {
+    closeArticleFullscreen();
+  }
+});
+
+// Arrow buttons
 if (prevArticleBtn) {
   prevArticleBtn.addEventListener("click", () => {
     if (currentArticleIndex > 0) {
       currentArticleIndex--;
-      renderArticle();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      updateArticlesCarousel();
     }
   });
 }
@@ -1920,10 +2218,125 @@ if (nextArticleBtn) {
   nextArticleBtn.addEventListener("click", () => {
     if (currentArticleIndex < articles.length - 1) {
       currentArticleIndex++;
-      renderArticle();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      updateArticlesCarousel();
     }
   });
+}
+
+// Drag / Swipe system on carousel container
+function initArticlesDragAndScroll() {
+  if (!articlesStageContainer) return;
+
+  let isDown = false;
+  let startX = 0;
+  let currentOffset = 0;
+  let moved = false;
+
+  articlesStageContainer.addEventListener("mousedown", (e) => {
+    if (e.button !== 0) return;
+    isDown = true;
+    moved = false;
+    startX = e.pageX;
+    articlesStageContainer.classList.add("is-dragging");
+
+    const style = window.getComputedStyle(articlesCarouselTrack);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    currentOffset = matrix.m41;
+    articlesCarouselTrack.style.transition = "none";
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    const diff = e.pageX - startX;
+    if (Math.abs(diff) > 5) moved = true;
+    articlesCarouselTrack.style.transform = `translateX(${currentOffset + diff}px)`;
+  });
+
+  window.addEventListener("mouseup", (e) => {
+    if (!isDown) return;
+    isDown = false;
+    articlesStageContainer.classList.remove("is-dragging");
+    articlesCarouselTrack.style.transition = "transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1)";
+
+    if (moved) {
+      const stageCenter = articlesStageContainer.getBoundingClientRect().left + articlesStageContainer.offsetWidth / 2;
+      const cards = Array.from(articlesCarouselTrack.querySelectorAll(".article-carousel-card"));
+      let closestIdx = currentArticleIndex;
+      let minDistance = Infinity;
+
+      cards.forEach((card, idx) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(cardCenter - stageCenter);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
+        }
+      });
+
+      currentArticleIndex = closestIdx;
+      updateArticlesCarousel();
+    }
+  });
+
+  // Touch support for carousel
+  let touchStartXCoord = 0;
+  let touchOffset = 0;
+  let touchMoved = false;
+
+  articlesStageContainer.addEventListener("touchstart", (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    touchStartXCoord = e.touches[0].clientX;
+    touchMoved = false;
+    const style = window.getComputedStyle(articlesCarouselTrack);
+    const matrix = new WebKitCSSMatrix(style.transform);
+    touchOffset = matrix.m41;
+    articlesCarouselTrack.style.transition = "none";
+  }, { passive: true });
+
+  articlesStageContainer.addEventListener("touchmove", (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    const diff = e.touches[0].clientX - touchStartXCoord;
+    if (Math.abs(diff) > 5) touchMoved = true;
+    articlesCarouselTrack.style.transform = `translateX(${touchOffset + diff}px)`;
+  }, { passive: true });
+
+  articlesStageContainer.addEventListener("touchend", () => {
+    articlesCarouselTrack.style.transition = "transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1)";
+    if (touchMoved) {
+      const stageCenter = articlesStageContainer.getBoundingClientRect().left + articlesStageContainer.offsetWidth / 2;
+      const cards = Array.from(articlesCarouselTrack.querySelectorAll(".article-carousel-card"));
+      let closestIdx = currentArticleIndex;
+      let minDistance = Infinity;
+
+      cards.forEach((card, idx) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(cardCenter - stageCenter);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
+        }
+      });
+
+      currentArticleIndex = closestIdx;
+      updateArticlesCarousel();
+    }
+  }, { passive: true });
+
+  // On scroll inside view-articles, if scrolling down on active card, open full screen
+  const viewArticles = document.getElementById("view-articles");
+  if (viewArticles) {
+    viewArticles.addEventListener("wheel", (e) => {
+      if (activePage !== "articles") return;
+      if (articleFullscreenReader && articleFullscreenReader.classList.contains("is-open")) return;
+      if (e.deltaY > 30) {
+        // Expand active article into fullscreen
+        e.preventDefault();
+        openArticleFullscreen(currentArticleIndex);
+      }
+    }, { passive: false });
+  }
 }
 
 // =========================================================
@@ -2024,11 +2437,17 @@ function renderEngineeringFrame() {
 // INITIALIZATION
 // =========================================================
 window.addEventListener("DOMContentLoaded", () => {
+  initNavDraggers();
   initWorkFilters();
   renderWorkGrid();
   initWorkIndexScroll();
   renderArticle();
+  initArticlesDragAndScroll();
   initEngineering();
   parseInitialRoute();
-  window.addEventListener("resize", updateNavIndicator);
+  window.addEventListener("resize", () => {
+    updateNavIndicator();
+    updateWorkFiltersIndicator();
+    updateArticlesCarousel();
+  });
 });
